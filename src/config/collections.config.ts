@@ -68,142 +68,138 @@ export interface Category {
 
 export type DashboardItem = DataCreationItem;
 
+const cardCollection: DashboardItem = {
+  collectionRef: "cartas",
+  itemID: "cartas_id",
+  itemCategory: "creation",
+  sidebarIcon: "AddAPhoto",
+  routerPath: "cartas",
+  sidebarLabel: "Cartas contempladas",
+  hasAttributes: false,
+  hasCategories: false,
+  fieldGroups: [
+    { id: "adminGroup", label: "Administradora" },
+    { id: "infoGroup", label: "Informações" },
+  ],
+  fields: [
+    {
+      groupID: "adminGroup",
+      fieldType: "string",
+      label: "Nome da administradora",
+      name: "administradora",
+    },
+    {
+      groupID: "infoGroup",
+      fieldType: "select",
+      selectOptions: ["Imóvel", "Automóvel"],
+      label: "Tipo de carta",
+      name: "cardType",
+    },
+    {
+      groupID: "infoGroup",
+      fieldType: "money",
+      label: "Valor do crédito",
+      name: "cardValor",
+    },
+    {
+      groupID: "infoGroup",
+      fieldType: "money",
+      label: "Entrada",
+      name: "cardEntrada",
+    },
+    {
+      groupID: "infoGroup",
+      fieldType: "string",
+      label: "Saldo",
+      name: "cardSaldo",
+    },
+    {
+      groupID: "infoGroup",
+      fieldType: "boolean",
+      label: "Alerta de boa oferta",
+      name: "cardDestaque",
+    },
+    {
+      groupID: "infoGroup",
+      fieldType: "boolean",
+      label: "Situação da carta",
+      name: "cardSituation",
+    },
+  ],
+};
+
+const blogCollection: DashboardItem = {
+  collectionRef: "portalBlog",
+  sidebarIcon: "Apps",
+  routerPath: "blog",
+  sidebarLabel: "Blog",
+  itemCategory: "creation",
+  itemID: "blogPortal",
+  fieldGroups: [{ id: "blogInfo", label: "Informações" }],
+  fields: [
+    {
+      groupID: "blogInfo",
+      fieldType: "string",
+      label: "Título",
+      name: "blogTitle",
+    },
+    {
+      groupID: "blogInfo",
+      fieldType: "image",
+      label: "Imagem principal",
+      name: "featuredImage",
+      hidden: true,
+    },
+    {
+      groupID: "blogInfo",
+      fieldType: "markdown",
+      label: "Texto",
+      name: "blogPost",
+      hidden: true,
+    },
+    {
+      groupID: "blogInfo",
+      fieldType: "boolean",
+      label: "Ativo",
+      name: "blogActive",
+    },
+  ],
+};
+
+const testimonialCollection: DashboardItem = {
+  collectionRef: "testimonials",
+  itemCategory: "creation",
+  itemID: "portalTestimonials",
+  routerPath: "depoimentos",
+  sidebarLabel: "Depoimentos",
+  sidebarIcon: "AddPhotoAlternate",
+  fieldGroups: [{ id: "infoTestimonial", label: "Informações" }],
+  fields: [
+    {
+      groupID: "infoTestimonial",
+      fieldType: "string",
+      label: "Nome do cliente",
+      name: "testimonialName",
+    },
+    {
+      groupID: "infoTestimonial",
+      fieldType: "image",
+      label: "Foto do cliente",
+      name: "testimonialPicture",
+      hidden: true,
+    },
+    {
+      groupID: "infoTestimonial",
+      fieldType: "string",
+      label: "Depoimento do cliente",
+      name: "testimonialText",
+      hidden: true,
+    },
+  ],
+};
+
 export const collections: Array<DashboardItem> = [
-  {
-    itemID: "testCollection1",
-    collectionRef: "collection1",
-    itemCategory: "creation",
-    sidebarIcon: "Delete",
-    routerPath: "routerPath",
-    sidebarLabel: "Dashboard item",
-    hasAttributes: true,
-    hasCategories: true,
-    fieldGroups: [
-      {
-        id: "group1",
-        label: "Informações",
-      },
-      {
-        id: "group2",
-        label: "Grupo 2",
-      },
-    ],
-
-    fields: [
-      {
-        label: "Número",
-        fieldType: "phone",
-        name: "phoneNumber",
-        groupID: "group1",
-      },
-
-      {
-        label: "Preço",
-        fieldType: "money",
-        name: "itemPrice",
-        currencyPrefix: "R$",
-        groupID: "group1",
-      },
-
-      {
-        name: "creditValue",
-        fieldType: "string",
-        label: "Valor do crédito",
-        groupID: "group1",
-      },
-      {
-        name: "featuredImage",
-        fieldType: "image",
-        label: "Imagem principal",
-        groupID: "group1",
-        hidden: true,
-      },
-
-      {
-        label: "Post",
-        fieldType: "markdown",
-        name: "blogPost",
-        groupID: "group2",
-        hidden: true,
-      },
-    ],
-
-    attributesFields: [
-      {
-        name: "adminOrigin",
-        label: "Administradoras",
-      },
-      {
-        name: "brands",
-        label: "Marcas",
-      },
-      {
-        name: "sizes",
-        label: "Tamanhos",
-      },
-      {
-        name: "ingredients",
-        label: "Ingredientes",
-      },
-    ],
-  },
-
-  {
-    fieldGroups: [{ id: "group1", label: "Informações" }],
-    itemID: "testCollection2",
-    collectionRef: "firebaseCollection",
-    itemCategory: "creation",
-    fields: [
-      {
-        fieldType: "string",
-        label: "Campo",
-        name: "field1",
-        currencyPrefix: "R$",
-        groupID: "group1",
-      },
-
-      {
-        fieldType: "select",
-        name: "selectme",
-        groupID: "group1",
-        label: "Selecione",
-        selectOptions: ["Opção 1", "trikiki", "rolimã"],
-      },
-      {
-        fieldType: "boolean",
-        name: "verdaderoooo",
-        groupID: "group1",
-        label: "Habilitado",
-      },
-      {
-        fieldType: "radio",
-        name: "mylittleradio",
-        groupID: "group1",
-        label: "Just no",
-        radioOptions: [
-          { label: "Primeiro valor", value: "value1" },
-          { label: "Segundo valor maybe", value: "maybevalue2" },
-          { label: "To reach inside and find the peace", value: "as I decay" },
-        ],
-      },
-
-      {
-        fieldType: "checkbox",
-        label: "Checkboxu-sama",
-        groupID: "group1",
-        name: "checkboxsenpai",
-        checkboxOptions: [
-          { label: "Primeiro valorhue", value: "value1" },
-          { label: "Segundo valor maybehue", value: "maybevalue2" },
-          {
-            label: "To reach inside and find the peacehue",
-            value: "as I decay",
-          },
-        ],
-      },
-    ],
-    routerPath: "rota2",
-    sidebarIcon: "AcUnit",
-    sidebarLabel: "Label 2",
-  },
+  cardCollection,
+  blogCollection,
+  testimonialCollection,
 ];
