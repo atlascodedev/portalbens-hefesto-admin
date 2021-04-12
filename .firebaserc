@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "portalbens-nextjs-hefesto"
+  },
+  "targets": {
+    "portalbens-nextjs-hefesto": {
+      "hosting": {
+        "admin": [
+          "portalbens-admin"
+        ],
+        "app": [
+          "portalbens-nextjs-hefesto"
+        ]
+      }
+    }
+  }
+}
