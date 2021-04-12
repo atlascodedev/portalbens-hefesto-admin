@@ -72,7 +72,7 @@ const cardCollection: DashboardItem = {
   collectionRef: "cartas",
   itemID: "cartas_id",
   itemCategory: "creation",
-  sidebarIcon: "AddAPhoto",
+  sidebarIcon: "CardTravel",
   routerPath: "cartas",
   sidebarLabel: "Cartas contempladas",
   hasAttributes: false,
@@ -118,19 +118,21 @@ const cardCollection: DashboardItem = {
       fieldType: "boolean",
       label: "Alerta de boa oferta",
       name: "cardDestaque",
+      hidden: true,
     },
     {
       groupID: "infoGroup",
       fieldType: "boolean",
       label: "Situação da carta",
       name: "cardSituation",
+      hidden: true,
     },
   ],
 };
 
 const blogCollection: DashboardItem = {
   collectionRef: "portalBlog",
-  sidebarIcon: "Apps",
+  sidebarIcon: "LibraryBooks",
   routerPath: "blog",
   sidebarLabel: "Blog",
   itemCategory: "creation",
@@ -172,7 +174,7 @@ const testimonialCollection: DashboardItem = {
   itemID: "portalTestimonials",
   routerPath: "depoimentos",
   sidebarLabel: "Depoimentos",
-  sidebarIcon: "AddPhotoAlternate",
+  sidebarIcon: "Group",
   fieldGroups: [{ id: "infoTestimonial", label: "Informações" }],
   fields: [
     {

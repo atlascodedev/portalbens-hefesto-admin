@@ -3,8 +3,8 @@ import { ArrowBackRounded } from "@material-ui/icons";
 import styled from "styled-components";
 
 export const EntryCreationRoot = styled.div`
-  width: 90%;
-  height: 75%;
+  width: 95%;
+  height: 90%;
 
   @media (min-width: 1024px) {
     width: 80%;

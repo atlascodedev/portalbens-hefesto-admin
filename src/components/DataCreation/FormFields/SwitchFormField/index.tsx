@@ -20,7 +20,7 @@ const SwitchFormField = ({
       <FormControlLabel
         control={
           <Switch
-            checked={value}
+            checked={value || false}
             onChange={(
               event: React.ChangeEvent<HTMLInputElement>,
               checked: boolean

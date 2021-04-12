@@ -17,17 +17,15 @@ const ImageFormField = ({
   error,
 }: FormFieldComponentProps) => {
   return (
-    <div>
-      <ImageFieldComponentBase
-        blurFn={onBlur}
-        error={error}
-        helperText={helperText}
-        label={label}
-        changeFn={onChange}
-        value={value}
-        name={name}
-      />
-    </div>
+    <ImageFieldComponentBase
+      blurFn={onBlur}
+      error={error}
+      helperText={helperText}
+      label={label}
+      changeFn={onChange}
+      value={value}
+      name={name}
+    />
   );
 };
 

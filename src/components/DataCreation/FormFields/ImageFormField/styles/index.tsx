@@ -8,11 +8,16 @@ import validURL from "../../../../../helper/isURL";
 const ImageFieldComponentRoot = styled.div`
   display: flex;
   width: fit-content;
+  grid-column: 1/3;
+
+  @media (min-width: 1024px) {
+    grid-column: initial;
+  }
 `;
 
 const ImageFieldComponentBox = styled.div<{ validImage: boolean }>`
-  width: 225.58px;
-  height: 175.92px;
+  width: 200.58px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,6 +34,10 @@ const ImageFieldComponentBox = styled.div<{ validImage: boolean }>`
     props.validImage
       ? "linear-gradient(45deg,rgb(230, 230, 230) 25%,transparent 25%,transparent 75%,rgb(230, 230, 230) 75%,rgb(230, 230, 230)),linear-gradient(45deg,rgb(230, 230, 230) 25%,transparent 25%,transparent 75%,rgb(230, 230, 230) 75%,rgb(230, 230, 230))"
       : "none"};
+
+  @media (min-width: 1024px) {
+    height: 175.92px;
+  }
 `;
 
 const ImageFieldComponentBoxIcon = styled(motion.div)`

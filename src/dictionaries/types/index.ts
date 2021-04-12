@@ -38,4 +38,7 @@ export type IconTypes =
   | "Panorama"
   | "Build"
   | "SubdirectoryArrowRight"
-  | "ArrowBackRounded";
+  | "ArrowBackRounded"
+  | "LibraryBooks"
+  | "CardTravel"
+  | "Group";

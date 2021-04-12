@@ -22,11 +22,11 @@ const AccordionGridBox = styled.div`
   justify-items: center;
   grid-row-gap: 50px;
   width: 100%;
-  padding: 30px;
 
   @media (min-width: 1024px) {
     grid-template-columns: 1fr 1fr;
     justify-items: flex-start;
+    padding: 30px;
   }
 `;
 

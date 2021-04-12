@@ -133,7 +133,7 @@ const AdonisGallery = ({
   return (
     <div>
       <Modal
-        style={{ outline: "none" }}
+        style={{ outline: "none", zIndex: 8000 }}
         open={isOpen}
         onClose={handleGalleryClose}
         closeAfterTransition

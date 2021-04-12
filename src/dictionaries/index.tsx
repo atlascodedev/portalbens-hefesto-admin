@@ -18,11 +18,14 @@ import {
   ArrowBackRounded,
   AttachMoney,
   Build,
+  CardTravel,
   Category,
   Close,
   Delete,
   DeleteForever,
   FileCopy,
+  Group,
+  LibraryBooks,
   MoreHoriz,
   Palette,
   Panorama,
@@ -80,6 +83,9 @@ export const IconDictonary: Record<
   Build: Build,
   SubdirectoryArrowRight: SubdirectoryArrowRight,
   ArrowBackRounded: ArrowBackRounded,
+  LibraryBooks: LibraryBooks,
+  CardTravel: CardTravel,
+  Group: Group,
 };
 
 export const DashboardItemDictionary: Record<
