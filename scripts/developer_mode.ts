@@ -84,3 +84,12 @@ runTerminalCommand(
   { bg_color_hex: "#007ACC", color_hex: "#FFFFFF" },
   "Typescript cloud functions compilation"
 );
+
+
+// const process = spawn(...); // long running process
+// // ... later...
+//         if (os.platform() === 'win32') { // process.platform was undefined for me, but this works
+//           execSync(`taskkill /F /T /PID ${process.pid}`); // windows specific
+//         } else {
+//           process.kill();
+//         }
