@@ -167,13 +167,22 @@ export const uploadAndOptimizeImage = (
       type: UPLOAD_ADONIS_PHOTO_START,
     });
 
-    Axios.post<AdonisImage, AxiosResponse<AdonisImage>>(
-      "http://localhost:5001/portalbens-nextjs-hefesto/us-central1/api/adonis/optimize",
-      {
-        fileName: fileName,
-        base64URI: base64URI,
-      }
-    )
+    // TODO - DEFINE CONSTANTS FOR HTTP CALLS THAT CHANGED BASED ON ENV
+
+    let requestURL: string;
+
+    if (process.env.NODE_ENV !== "production") {
+      requestURL =
+        "http://localhost:5001/portalbens-nextjs-hefesto/us-central1/api/adonis/optimize";
+    } else {
+      requestURL =
+        "https://us-central1-portalbens-nextjs-hefesto.cloudfunctions.net/api/adonis/optimize";
+    }
+
+    Axios.post<AdonisImage, AxiosResponse<AdonisImage>>(requestURL, {
+      fileName: fileName,
+      base64URI: base64URI,
+    })
       .then((uploadSuccessResponse) => {
         console.log(uploadSuccessResponse.data);
 

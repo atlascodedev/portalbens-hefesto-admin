@@ -10,7 +10,7 @@
     "strict": true,
     "target": "es2017",
     "esModuleInterop": true,
-    "watch": true
+    // "watch": true
   },
   "include": ["src"]
 }
