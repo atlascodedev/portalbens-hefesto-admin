@@ -29,7 +29,7 @@ const SelectFormField = ({
         id={id}
         label={label}
         name={name}
-        value={value || ""}
+        value={value}
         error={error}
         helperText={helperText}
         onBlur={onBlur}
@@ -38,7 +38,7 @@ const SelectFormField = ({
         {selectValues.map((value, index) => {
           return (
             (
-              <MenuItem value={value} key={index}>
+              <MenuItem style={{ width: "100%" }} value={value} key={index}>
                 {value.toString()}
               </MenuItem>
             ) || (

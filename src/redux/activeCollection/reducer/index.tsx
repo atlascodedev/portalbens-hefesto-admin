@@ -8,6 +8,7 @@ import {
   ACTIVE_COLLECTION_ENTRY_SETUP_DISCARD,
   ACTIVE_COLLECTION_ENTRY_SETUP_NEW,
   ACTIVE_COLLECTION_ENTRY_SETUP_UPDATE,
+  ACTIVE_COLLECTION_ENTRY_UPDATE_SUCCESS,
   ACTIVE_COLLECTION_ENTRY_VIEW_VISIBILITY_HIDDEN,
   ACTIVE_COLLECTION_ENTRY_VIEW_VISIBILITY_SHOW,
   ACTIVE_COLLECTION_SET_FAIL,
@@ -40,6 +41,9 @@ export const activeCollectionReducer = (
   action: ActiveContentActionTypes
 ): ActiveCollectionState => {
   switch (action.type) {
+    case ACTIVE_COLLECTION_ENTRY_UPDATE_SUCCESS:
+      return { ...state, isUpdating: false };
+
     case ACTIVE_COLLECTION_ENTRY_CREATE_SUCCESS:
       return { ...state, isCreating: false };
 

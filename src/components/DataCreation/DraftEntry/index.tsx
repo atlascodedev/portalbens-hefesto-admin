@@ -5,6 +5,7 @@ import useFieldGrouping from "../../../hooks/useFieldGrouping";
 import useFormGenerator from "../../../hooks/useFormGenerator";
 import { RootState } from "../../../redux";
 import {
+  entryUpdate,
   newEntryCreate,
   newEntryDiscard,
 } from "../../../redux/activeCollection/actions";
@@ -19,6 +20,7 @@ const EntryCreation = ({
   isCreating,
   discardEntry,
   createEntry,
+  updateEntry,
   collectionID,
   hasAttributes,
   hasCategories,
@@ -32,6 +34,10 @@ const EntryCreation = ({
   const handleDiscard = () => {
     discardEntry();
     formik.resetForm();
+  };
+
+  const handleSubmit = () => {
+    isUpdating ? updateEntry(formik.values) : createEntry(formik.values);
   };
 
   React.useEffect(() => {
@@ -53,8 +59,9 @@ const EntryCreation = ({
       <EntryCreationLayoutMain
         isFormValid={formik.isValid && formik.dirty}
         handleCloseFn={handleDiscard}
-        handleSubmitFn={() => createEntry(formik.values)}
+        handleSubmitFn={handleSubmit}
         sidebarLabel={sidebarLabel}
+        isUpdating={isUpdating}
       >
         <EntryCreationFields
           hasAttributes={hasAttributes}
@@ -83,6 +90,7 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = {
   discardEntry: newEntryDiscard,
   createEntry: newEntryCreate,
+  updateEntry: entryUpdate,
 };
 
 const entryCreationConnector = connect(mapStateToProps, mapDispatchToProps);

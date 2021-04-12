@@ -168,7 +168,7 @@ export const uploadAndOptimizeImage = (
     });
 
     Axios.post<AdonisImage, AxiosResponse<AdonisImage>>(
-      "http://localhost:5001/atlas-ares/us-central1/api/adonis/optimize",
+      "http://localhost:5001/portalbens-nextjs-hefesto/us-central1/api/adonis/optimize",
       {
         fileName: fileName,
         base64URI: base64URI,

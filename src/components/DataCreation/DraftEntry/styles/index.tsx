@@ -160,6 +160,7 @@ interface EntryCreationLayouMainProps {
   sidebarLabel: string;
   children: React.ReactNode;
   isFormValid: boolean;
+  isUpdating: boolean;
 }
 
 const EntryCreationLayoutMain = ({
@@ -168,6 +169,7 @@ const EntryCreationLayoutMain = ({
   sidebarLabel,
   handleSubmitFn,
   isFormValid,
+  isUpdating,
 }: EntryCreationLayouMainProps) => {
   return (
     <EntryCreationRoot>
@@ -176,7 +178,10 @@ const EntryCreationLayoutMain = ({
           <EntryCreationHeader>
             <EntryCreationHeaderInner>
               <div className="entryHeaderLabel">
-                <div>Criando novo item em {sidebarLabel!.toUpperCase()}</div>
+                <div>
+                  {isUpdating ? "Atualizando" : "Criando novo"} item em{" "}
+                  {sidebarLabel!.toUpperCase()}
+                </div>
               </div>
 
               <div className="entryHeaderExitButton">
@@ -218,7 +223,7 @@ const EntryCreationLayoutMain = ({
                     onClick={handleSubmitFn}
                     className="entryFooterActionCreate"
                   >
-                    Criar item
+                    {isUpdating ? "Atualizar item" : "Criar item"}
                   </Button>
                 </span>
               </Tooltip>

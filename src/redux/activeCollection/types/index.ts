@@ -1,5 +1,34 @@
 import { Category, DashboardItem } from "../../../config/collections.config";
 
+export const ACTIVE_COLLECTION_ENTRY_UPDATE_START =
+  "ACTIVE_COLLECTION_ENTRY_UPDATE_START";
+
+export const ACTIVE_COLLECTION_ENTRY_UPDATE_SUCCESS =
+  "ACTIVE_COLLECTION_ENTRY_UPDATE_SUCCESS";
+
+export const ACTIVE_COLLECTION_ENTRY_UPDATE_FAIL =
+  "ACTIVE_COLLECTION_ENTRY_UPDATE_FAIL";
+
+interface ActiveCollectionEntryUpdateStart {
+  type: typeof ACTIVE_COLLECTION_ENTRY_UPDATE_START;
+}
+
+interface ActiveCollectionEntryUpdateSuccess {
+  type: typeof ACTIVE_COLLECTION_ENTRY_UPDATE_SUCCESS;
+}
+
+interface ActiveCollectionEntryUpdateFail {
+  type: typeof ACTIVE_COLLECTION_ENTRY_UPDATE_FAIL;
+  payload: {
+    error: string;
+  };
+}
+
+export type ActiveCollectionEntryUpdateActionTypes =
+  | ActiveCollectionEntryUpdateStart
+  | ActiveCollectionEntryUpdateFail
+  | ActiveCollectionEntryUpdateSuccess;
+
 export const ACTIVE_COLLECTION_ENTRY_DELETE_START =
   "ACTIVE_COLLECTION_ENTRY_DELETE_START";
 
@@ -286,4 +315,5 @@ export type ActiveContentActionTypes =
   | ActiveCollectionAttributesObserverActionTypes
   | ActiveCollectionEntriesObserverActionTypes
   | ActiveCollectionEntryViewVisibilityActionTypes
-  | ActiveCollectionEntryDeleteActionTypes;
+  | ActiveCollectionEntryDeleteActionTypes
+  | ActiveCollectionEntryUpdateActionTypes;

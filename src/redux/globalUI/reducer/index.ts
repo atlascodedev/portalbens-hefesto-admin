@@ -3,6 +3,7 @@ import { isDoStatement } from "typescript";
 import {
   ActiveCollectionEntryCreateActionTypes,
   ActiveCollectionEntryDeleteActionTypes,
+  ActiveCollectionEntryUpdateActionTypes,
   ACTIVE_COLLECTION_ENTRIES_CATEGORIES_GET_START,
   ACTIVE_COLLECTION_ENTRY_CREATE_FAIL,
   ACTIVE_COLLECTION_ENTRY_CREATE_START,
@@ -10,6 +11,9 @@ import {
   ACTIVE_COLLECTION_ENTRY_DELETE_FAIL,
   ACTIVE_COLLECTION_ENTRY_DELETE_START,
   ACTIVE_COLLECTION_ENTRY_DELETE_SUCCESS,
+  ACTIVE_COLLECTION_ENTRY_UPDATE_FAIL,
+  ACTIVE_COLLECTION_ENTRY_UPDATE_START,
+  ACTIVE_COLLECTION_ENTRY_UPDATE_SUCCESS,
 } from "../../activeCollection/types";
 import {
   DeleteAdonisImageActionTypes,
@@ -84,9 +88,31 @@ export const globalUIReducer = (
     | AttributeDraftActionTypes
     | ActiveCollectionEntryCreateActionTypes
     | ActiveCollectionEntryDeleteActionTypes
+    | ActiveCollectionEntryUpdateActionTypes
     | AuthenticationActionTypes
 ): GlobalUIState => {
   switch (action.type) {
+    case ACTIVE_COLLECTION_ENTRY_UPDATE_START:
+      return { ...state, isLoading: true };
+
+    case ACTIVE_COLLECTION_ENTRY_UPDATE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        notificationMessage: "Item atualizado com sucesso",
+        notificationOpen: true,
+        notificationSeverity: "success",
+      };
+
+    case ACTIVE_COLLECTION_ENTRY_UPDATE_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        notificationMessage: action.payload.error,
+        notificationOpen: true,
+        notificationSeverity: "error",
+      };
+
     case AUTHENTICATION_LOGIN_START:
       return { ...state, isLoading: true };
 

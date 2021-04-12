@@ -21,6 +21,7 @@ import {
   ActiveCollectionEntryCreateActionTypes,
   ActiveCollectionEntryDeleteActionTypes,
   ActiveCollectionEntrySetupActionTypes,
+  ActiveCollectionEntryUpdateActionTypes,
   ActiveCollectionEntryViewVisibilityActionTypes,
   ActiveCollectionState,
   ActiveContentActionTypes,
@@ -42,6 +43,9 @@ import {
   ACTIVE_COLLECTION_ENTRY_SETUP_DISCARD,
   ACTIVE_COLLECTION_ENTRY_SETUP_NEW,
   ACTIVE_COLLECTION_ENTRY_SETUP_UPDATE,
+  ACTIVE_COLLECTION_ENTRY_UPDATE_FAIL,
+  ACTIVE_COLLECTION_ENTRY_UPDATE_START,
+  ACTIVE_COLLECTION_ENTRY_UPDATE_SUCCESS,
   ACTIVE_COLLECTION_ENTRY_VIEW_VISIBILITY_HIDDEN,
   ACTIVE_COLLECTION_ENTRY_VIEW_VISIBILITY_SHOW,
   ACTIVE_COLLECTION_SET_FAIL,
@@ -84,6 +88,58 @@ export const newEntryCreate = (
       .catch((error) => {
         console.log(error);
         dispatch({ type: ACTIVE_COLLECTION_ENTRY_CREATE_FAIL });
+      });
+  };
+};
+
+export const entryUpdate = (
+  data: any
+): ThunkAction<void, RootState, unknown, Action<string>> => {
+  return async (
+    dispatch: Dispatch<ActiveCollectionEntryUpdateActionTypes>,
+    getState: () => RootState
+  ) => {
+    dispatch({ type: ACTIVE_COLLECTION_ENTRY_UPDATE_START });
+
+    const { activeCollection } = getState();
+
+    const transactionUUID: string = activeCollection.entrySelected.entryUUID;
+
+    db.collection("collections")
+      .doc(activeCollection.collectionRef)
+      .collection("entries")
+      .where("uuid", "==", transactionUUID)
+      .get()
+      .then((entrySnapshot) => {
+        entrySnapshot.forEach((docRef) => {
+          docRef.ref
+            .update(data)
+            .then(() => {
+              dispatch({
+                type: ACTIVE_COLLECTION_ENTRY_UPDATE_SUCCESS,
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+              dispatch({
+                type: ACTIVE_COLLECTION_ENTRY_UPDATE_FAIL,
+                payload: {
+                  error:
+                    "Ocorreu um erro ao tentar atualizar o item selecionado.",
+                },
+              });
+            });
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch({
+          type: ACTIVE_COLLECTION_ENTRY_UPDATE_FAIL,
+          payload: {
+            error:
+              "Não foi possível encontrar o item selecionado no banco de dados, atualize a página e tente novamente.",
+          },
+        });
       });
   };
 };
