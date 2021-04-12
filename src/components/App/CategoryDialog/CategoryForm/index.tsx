@@ -81,7 +81,7 @@ const CategoryForm = ({
   });
 
   const validateCategoryName: () => void = () => {
-    Yup.reach(schema, "categoryName")
+    Yup.reach(schema, "categoryName", null, null)
       .validate(categoryNameCurrentValue)
       .then(() => {
         setCategoryNameError(false);
@@ -92,7 +92,7 @@ const CategoryForm = ({
   };
 
   const validateCategoryParent: () => void = () => {
-    Yup.reach(schema, "categoryParent")
+    Yup.reach(schema, "categoryParent", null, null)
       .validate(categoryParentCurrentValue)
       .then(() => {
         setCategoryParentError(false);
