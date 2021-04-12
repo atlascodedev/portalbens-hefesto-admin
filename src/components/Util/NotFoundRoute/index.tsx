@@ -6,16 +6,18 @@ interface Props extends RouteComponentProps {}
 
 const NotFoundRoute = ({}: Props) => {
   React.useEffect(() => {
-    setTimeout(() => {
-      navigate(`/${loginRedirect}`, { state: {}, replace: false });
-    }, 5000);
+    navigate(`/${loginRedirect}`, { state: {}, replace: false });
   }, []);
 
   return (
-    <div>
-      This route does not exists, route not found. You will be redirect in 5
-      seconds
-    </div>
+    <div
+      style={{
+        height: "100vh",
+        width: "100vw",
+        overflow: "hidden",
+        backgroundColor: "#5d6d7c",
+      }}
+    ></div>
   );
 };
 
