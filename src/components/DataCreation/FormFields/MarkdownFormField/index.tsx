@@ -1,7 +1,7 @@
 import React from "react";
 import { FormFieldComponentProps } from "../Root";
 import styled from "styled-components";
-import SunEditor from "suneditor-react";
+import SunEditor, { SunEditorReactProps } from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css"; // Import Sun Editor's CSS File
 
 const allPlugins = [
@@ -63,6 +63,9 @@ const MarkdownFieldRoot = styled.div`
     font-family: "Iceland";
   }
 `;
+export interface SunEditorFixedProps extends SunEditorReactProps {
+  ref: any;
+}
 
 const MarkdownFormField = ({
   formFieldType,
@@ -76,7 +79,6 @@ const MarkdownFormField = ({
   value,
   error,
 }: FormFieldComponentProps) => {
-  const markdownEditorRef: React.RefObject<any> = React.useRef(null);
 
   const handleMarkdownValueChange = (value: any) => {
     setFieldValue(name, value, true);
@@ -86,7 +88,6 @@ const MarkdownFormField = ({
     <div style={{ gridColumn: "1/3", justifySelf: "center" }}>
       <MarkdownFieldRoot>
         <SunEditor
-          ref={markdownEditorRef}
           onFocus={() => console.log("ass")}
           lang="pt_br"
           name={name}
