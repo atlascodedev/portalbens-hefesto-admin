@@ -19,7 +19,11 @@ export const auth = firebase.auth();
 export const storage = firebase.storage();
 export const fieldValues = app.firestore.FieldValue;
 
-if (window.location.hostname === "localhost" || "127.0.0.1") {
+db.useEmulator("localhost", 8080);
+if (
+  window.location.hostname === "localhost" ||
+  window.location.hostname == "127.0.0.1"
+) {
   db.useEmulator("localhost", 8080);
 
   console.log(
