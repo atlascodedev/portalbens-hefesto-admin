@@ -19,7 +19,6 @@ export const auth = firebase.auth();
 export const storage = firebase.storage();
 export const fieldValues = app.firestore.FieldValue;
 
-db.useEmulator("localhost", 8080);
 if (
   window.location.hostname === "localhost" ||
   window.location.hostname == "127.0.0.1"
