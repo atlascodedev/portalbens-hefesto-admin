@@ -4,7 +4,15 @@ import "firebase/firestore";
 import "firebase/storage";
 import config from "../config/firebase.config";
 
-const firebase = app.initializeApp(config);
+const firebase = app.initializeApp({
+  apiKey: "AIzaSyC1kyy9tFl6SEaS2m0m9z7cT4jhPIKcflY",
+  authDomain: "portalbens-nextjs-hefesto.firebaseapp.com",
+  projectId: "portalbens-nextjs-hefesto",
+  storageBucket: "portalbens-nextjs-hefesto.appspot.com",
+  messagingSenderId: "642850209298",
+  appId: "1:642850209298:web:fa8e3421f009c068c622cb",
+  measurementId: "G-RZ2EJG9596",
+});
 
 export const db = firebase.firestore();
 export const auth = firebase.auth();
