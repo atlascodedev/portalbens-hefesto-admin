@@ -134,6 +134,13 @@ const cardCollection: DashboardItem = {
       label: "Vencimento da carta",
       name: "cardExpire",
     },
+
+    {
+      groupID: "infoGroup",
+      fieldType: "time",
+      label: "Horário ",
+      name: "cardTime",
+    },
   ],
 };
 
