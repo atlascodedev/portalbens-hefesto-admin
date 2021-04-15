@@ -8,7 +8,8 @@ export type FormFieldTypes =
   | "markdown"
   | "boolean"
   | "radio"
-  | "checkbox";
+  | "checkbox"
+  | "date";
 
 export type IconTypes =
   | "AttachMoney"

@@ -44,11 +44,7 @@ const EntryCreation = ({
     formik.validateForm();
   }, []);
 
-  React.useEffect(() => {}, [formik.values, formik.errors, formik.touched]);
-
-  console.log(formik.errors);
-
-  // formik.setFieldTouched()
+  // React.useEffect(() => {}, [formik.values, formik.errors, formik.touched]);
 
   return (
     <AtlasBackdrop

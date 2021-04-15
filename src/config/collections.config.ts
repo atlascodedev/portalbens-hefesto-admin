@@ -127,6 +127,13 @@ const cardCollection: DashboardItem = {
       name: "cardSituation",
       hidden: true,
     },
+
+    {
+      groupID: "infoGroup",
+      fieldType: "date",
+      label: "Vencimento da carta",
+      name: "cardExpire",
+    },
   ],
 };
 

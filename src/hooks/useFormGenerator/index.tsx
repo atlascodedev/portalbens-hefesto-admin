@@ -58,6 +58,14 @@ const useFormGenerator = (): FormGenerator => {
 
     for (const field of fields!) {
       switch (field.fieldType) {
+        case "date":
+          initialValuesInner[field.name] = "";
+
+          validationSchemaInner[field.name] = Yup.string()
+            .required("É necessário definir uma data")
+            .nullable();
+          break;
+
         case "radio":
           isUpdating
             ? (initialValuesInner[field.name] =

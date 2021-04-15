@@ -50,6 +50,7 @@ import MarkdownFormField from "../components/DataCreation/FormFields/MarkdownFor
 import SwitchFormField from "../components/DataCreation/FormFields/SwitchFormField";
 import RadioFormField from "../components/DataCreation/FormFields/RadioFormField";
 import CheckboxFormField from "../components/DataCreation/FormFields/CheckboxFormField";
+import DateFormField from "../components/DataCreation/FormFields/DateFormField";
 
 export const IconDictonary: Record<
   IconTypes,
@@ -110,4 +111,5 @@ export const FormFieldDictionary: Record<
   boolean: SwitchFormField,
   radio: RadioFormField,
   checkbox: CheckboxFormField,
+  date: DateFormField,
 };

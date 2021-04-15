@@ -19,16 +19,13 @@ export const auth = firebase.auth();
 export const storage = firebase.storage();
 export const fieldValues = app.firestore.FieldValue;
 
-// if (
-//   window.location.hostname === "localhost" ||
-//   window.location.hostname == "127.0.0.1"
-// ) {
-//   db.useEmulator("localhost", 8080);
+if (process.env.NODE_ENV !== "production") {
+  db.useEmulator("localhost", 8080);
 
-//   console.log(
-//     "Running local instance of Firestore, data will not persist to production database"
-//   );
-// }
+  console.log(
+    "Running local instance of Firestore, data will not persist to production database"
+  );
+}
 
 // db.enablePersistence({
 //   synchronizeTabs: true,
