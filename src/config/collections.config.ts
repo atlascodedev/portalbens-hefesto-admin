@@ -162,7 +162,7 @@ const blogCollection: DashboardItem = {
     {
       groupID: "blogInfo",
       fieldType: "boolean",
-      label: "Ativo",
+      label: "Status do post",
       name: "blogActive",
     },
   ],
@@ -173,7 +173,7 @@ const testimonialCollection: DashboardItem = {
   itemCategory: "creation",
   itemID: "portalTestimonials",
   routerPath: "depoimentos",
-  sidebarLabel: "Depoimentos",
+  sidebarLabel: "Depoimento",
   sidebarIcon: "Group",
   fieldGroups: [{ id: "infoTestimonial", label: "Informações" }],
   fields: [
@@ -200,8 +200,34 @@ const testimonialCollection: DashboardItem = {
   ],
 };
 
+const partnersCollection: DashboardItem = {
+  collectionRef: "partners",
+  itemCategory: "creation",
+  itemID: "partnerID",
+  routerPath: "parceiros",
+  sidebarIcon: "MoreHoriz",
+  sidebarLabel: "Parceiro",
+  fieldGroups: [{ id: "partnerInfo", label: "Informações" }],
+  fields: [
+    {
+      fieldType: "string",
+      label: "Nome do parceiro",
+      name: "partnerName",
+      groupID: "partnerInfo",
+    },
+    {
+      fieldType: "image",
+      label: "Logo do parceiro",
+      name: "partnerLogo",
+      groupID: "partnerInfo",
+      hidden: true,
+    },
+  ],
+};
+
 export const collections: Array<DashboardItem> = [
   cardCollection,
   blogCollection,
   testimonialCollection,
+  partnersCollection,
 ];

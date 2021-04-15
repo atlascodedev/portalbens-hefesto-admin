@@ -114,24 +114,23 @@ const UserProfile = ({
           TransitionComponent={Slide}
         >
           <DialogTitle>
-            {/* <Box
+            <Box
               className="profileDialogTitle"
               fontWeight={700}
               textAlign="center"
             >
               Perfil de usuário
-            </Box> */}
+            </Box>
           </DialogTitle>
 
-          {/* <Box
-            // marginTop={"-10px"}
+          <Box
+            marginTop={"-10px"}
             height="1px"
             width={"100%"}
             bgcolor="#333"
-          ></Box> */}
-
+          ></Box>
           <DialogContent>
-            {/* <Box my={2}>
+            <Box my={2}>
               <AvatarChangePicture />
             </Box>
 
@@ -150,21 +149,21 @@ const UserProfile = ({
                   <div className="fieldValue">{userInfoRole}</div>
                 </div>
               </UserProfileInfoContainer>
-            </Box> */}
+            </Box>
 
-            {/* <Box
+            <Box
               marginTop={"-10px"}
               height="1px"
               width={"100%"}
               bgcolor="#333"
               my={1}
-            ></Box> */}
+            ></Box>
 
             <UserProfileOptionsContainer>
               <Box>
-                {/* <UserProfileOptionsButton variant="outlined">
+                <UserProfileOptionsButton variant="outlined">
                   Configurações
-                </UserProfileOptionsButton> */}
+                </UserProfileOptionsButton>
               </Box>
 
               <Box mb={4}>

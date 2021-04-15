@@ -10,10 +10,18 @@ interface Props {
 }
 
 const roadmapItems: RoadmapItemType[] = [
-  { complete: true, label: "Teste" },
-  { complete: true, label: "Teste1" },
-  { complete: false, label: "Teste2" },
-  { complete: false, label: "Teste3" },
+  { complete: true, label: "Criação de cartas contempladas" },
+  { complete: true, label: "Sistema de blog" },
+  { complete: true, label: "Criação de depoimentos" },
+  { complete: true, label: "Criação de itens na seção de parceiros" },
+  { complete: true, label: "Sistema de otimização de imagens" },
+  { complete: true, label: "Armazenamento de imagens em nuvem" },
+  { complete: false, label: "Sistema de chat integrado com serviço Tawk.to" },
+  {
+    complete: false,
+    label:
+      "Automação de saldos e datas de cartas contempladas (falar com cliente a respeito para definir)",
+  },
 ];
 
 const AppInfo = ({ handleCloseFn, isOpen }: Props) => {

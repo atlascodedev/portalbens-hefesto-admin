@@ -1,4 +1,4 @@
-import { AdonisOrderedTriple } from "../../config/adonis.config";
+  import { AdonisOrderedTriple } from "../../config/adonis.config";
 import { storage } from "../../firebase";
 
 const imageGroupFromURL = async (

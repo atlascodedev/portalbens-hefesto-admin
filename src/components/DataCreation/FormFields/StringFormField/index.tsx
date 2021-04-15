@@ -1,9 +1,19 @@
 import { TextField } from "@material-ui/core";
-import { connect, useFormikContext } from "formik";
 import React from "react";
 import { FormFieldComponentProps } from "../Root";
+import styled from "styled-components";
 
-interface Props {}
+const TextFieldWrapper = styled.div`
+  .MuiInputBase-root {
+    min-width: 250px;
+  }
+
+  @media (min-width: 1024px) {
+    .MuiInputBase-root {
+      min-width: 400px;
+    }
+  }
+`;
 
 const StringFormField = ({
   formFieldType,
@@ -18,17 +28,19 @@ const StringFormField = ({
   ...props
 }: FormFieldComponentProps) => {
   return (
-    <TextField
-      onBlur={onBlur}
-      id={id}
-      name={name}
-      label={label}
-      value={value}
-      onChange={onChange}
-      variant="outlined"
-      error={error ? true : false}
-      helperText={helperText}
-    />
+    <TextFieldWrapper>
+      <TextField
+        onBlur={onBlur}
+        id={id}
+        name={name}
+        label={label}
+        value={value}
+        onChange={onChange}
+        variant="outlined"
+        error={error ? true : false}
+        helperText={helperText}
+      />
+    </TextFieldWrapper>
   );
 };
 

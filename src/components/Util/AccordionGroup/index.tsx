@@ -24,8 +24,8 @@ const AccordionGridBox = styled.div`
   width: 100%;
 
   @media (min-width: 1024px) {
-    grid-template-columns: 1fr 1fr;
-    justify-items: flex-start;
+    grid-template-columns: 1fr;
+    justify-items: center;
     padding: 30px;
   }
 `;

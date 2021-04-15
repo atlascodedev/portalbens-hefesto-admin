@@ -79,13 +79,12 @@ const MarkdownFormField = ({
   value,
   error,
 }: FormFieldComponentProps) => {
-
   const handleMarkdownValueChange = (value: any) => {
     setFieldValue(name, value, true);
   };
 
   return (
-    <div style={{ gridColumn: "1/3", justifySelf: "center" }}>
+    <div>
       <MarkdownFieldRoot>
         <SunEditor
           onFocus={() => console.log("ass")}
