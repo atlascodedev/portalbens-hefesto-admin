@@ -196,7 +196,7 @@ const useFormGenerator = (): FormGenerator => {
 
     setInitialValues(initialValuesInner);
     setValidationSchema(validationSchemaInner);
-  }, [isCreating, isUpdating]);
+  }, [isCreating, isUpdating, entrySelected]);
 
   return { fields, formik };
 };

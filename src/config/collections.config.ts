@@ -206,17 +206,9 @@ const testimonialCollection: DashboardItem = {
     },
     {
       groupID: "infoTestimonial",
-      fieldType: "string",
+      fieldType: "text",
       label: "Depoimento do cliente",
       name: "testimonialText",
-      hidden: true,
-    },
-
-    {
-      groupID: "infoTestimonial",
-      fieldType: "text",
-      label: "Depoimento de novo",
-      name: "testimonialNewText",
       hidden: true,
     },
   ],

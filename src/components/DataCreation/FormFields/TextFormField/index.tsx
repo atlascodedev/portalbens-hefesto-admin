@@ -39,7 +39,7 @@ const TextFormField = ({
         value={value}
         onChange={onChange}
         variant="outlined"
-        error={error ? true : false}
+        error={error}
         helperText={helperText}
       />
     </TextFieldWrapper>

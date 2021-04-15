@@ -3,6 +3,7 @@ import { FormFieldComponentProps } from "../Root";
 import styled from "styled-components";
 import SunEditor, { SunEditorReactProps } from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css"; // Import Sun Editor's CSS File
+import { useAppSelector } from "../../../../hooks/useAppSelector";
 
 const allPlugins = [
   ["undo", "redo"],
@@ -63,23 +64,16 @@ const MarkdownFieldRoot = styled.div`
     font-family: "Iceland";
   }
 `;
-export interface SunEditorFixedProps extends SunEditorReactProps {
-  ref: any;
-}
+const MarkdownFormField = (props) => {
+  const { isUpdating, entrySelected } = useAppSelector(
+    (state) => state.activeCollection
+  );
 
-const MarkdownFormField = ({
-  formFieldType,
-  helperText,
-  id,
-  label,
-  name,
-  onBlur,
-  onChange,
-  setFieldValue,
-  value,
-  error,
-}: FormFieldComponentProps) => {
-  const handleMarkdownValueChange = (value: any) => {
+  const { value, name, setFieldValue } = { ...props };
+
+  const markdownRef = React.useRef(null);
+
+  const handleMarkdownValueChange = (value) => {
     setFieldValue(name, value, true);
   };
 
@@ -87,9 +81,12 @@ const MarkdownFormField = ({
     <div>
       <MarkdownFieldRoot>
         <SunEditor
+          ref={markdownRef}
+          setContents={isUpdating ? entrySelected.entryValues[name] : ""}
           onFocus={() => console.log("ass")}
           lang="pt_br"
           name={name}
+          defaultValue={value}
           onChange={(e) => handleMarkdownValueChange(e)}
           setOptions={{
             height: "auto",
