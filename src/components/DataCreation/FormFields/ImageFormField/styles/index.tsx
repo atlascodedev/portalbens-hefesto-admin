@@ -8,7 +8,6 @@ import validURL from "../../../../../helper/isURL";
 const ImageFieldComponentRoot = styled.div`
   display: flex;
   width: fit-content;
-  grid-column: 1/3;
 
   @media (min-width: 1024px) {
     grid-column: initial;

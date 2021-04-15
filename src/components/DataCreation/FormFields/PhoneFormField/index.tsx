@@ -2,6 +2,7 @@ import { TextField } from "@material-ui/core";
 import React from "react";
 import NumberFormat from "react-number-format";
 import { FormFieldComponentProps } from "../Root";
+import { TextFieldWrapper } from "../TextFormField";
 
 interface Props {}
 
@@ -22,7 +23,7 @@ const PhoneFormField = ({
   };
 
   return (
-    <div>
+    <TextFieldWrapper>
       <NumberFormat
         format={"(##) #-####-####"}
         variant="outlined"
@@ -38,7 +39,7 @@ const PhoneFormField = ({
           handlePhoneValueChange(formattedValue)
         }
       />
-    </div>
+    </TextFieldWrapper>
   );
 };
 

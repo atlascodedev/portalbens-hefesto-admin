@@ -2,6 +2,7 @@ import React from "react";
 import { FormFieldComponentProps } from "../Root";
 import styled from "styled-components";
 import { MenuItem, TextField } from "@material-ui/core";
+import { TextFieldWrapper } from "../TextFormField";
 
 const SelectFormRootContainer = styled.div`
   width: 250px;
@@ -21,7 +22,7 @@ const SelectFormField = ({
   selectValues = [],
 }: FormFieldComponentProps) => {
   return (
-    <SelectFormRootContainer>
+    <TextFieldWrapper>
       <TextField
         fullWidth
         variant="outlined"
@@ -30,7 +31,7 @@ const SelectFormField = ({
         label={label}
         name={name}
         value={value || ""}
-      error={error}
+        error={error}
         helperText={helperText}
         onBlur={onBlur}
         onChange={onChange}
@@ -47,7 +48,7 @@ const SelectFormField = ({
           );
         })}
       </TextField>
-    </SelectFormRootContainer>
+    </TextFieldWrapper>
   );
 };
 

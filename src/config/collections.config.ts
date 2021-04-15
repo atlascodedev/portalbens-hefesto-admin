@@ -197,6 +197,14 @@ const testimonialCollection: DashboardItem = {
       name: "testimonialText",
       hidden: true,
     },
+
+    {
+      groupID: "infoTestimonial",
+      fieldType: "text",
+      label: "Depoimento de novo",
+      name: "testimonialNewText",
+      hidden: true,
+    },
   ],
 };
 

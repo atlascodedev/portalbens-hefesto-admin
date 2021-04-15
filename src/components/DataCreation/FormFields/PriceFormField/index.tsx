@@ -2,6 +2,7 @@ import { TextField } from "@material-ui/core";
 import React from "react";
 import NumberFormat from "react-number-format";
 import { FormFieldComponentProps } from "../Root";
+import { TextFieldWrapper } from "../TextFormField";
 
 const PriceFormField = ({
   formFieldType,
@@ -20,7 +21,7 @@ const PriceFormField = ({
   };
 
   return (
-    <div>
+    <TextFieldWrapper>
       <NumberFormat
         variant="outlined"
         thousandSeparator={","}
@@ -40,7 +41,7 @@ const PriceFormField = ({
           handlePriceChange(floatValue)
         }
       />
-    </div>
+    </TextFieldWrapper>
   );
 };
 

@@ -3,9 +3,9 @@ import React from "react";
 import styled from "styled-components";
 import { FormFieldComponentProps } from "../Root";
 
-const TextFieldWrapper = styled.div`
+export const TextFieldWrapper = styled.div`
   .MuiInputBase-root {
-    min-width: 250px;
+    min-width: 280px;
   }
 
   @media (min-width: 1024px) {
@@ -32,6 +32,8 @@ const TextFormField = ({
       <TextField
         onBlur={onBlur}
         id={id}
+        multiline
+        rows={8}
         name={name}
         label={label}
         value={value}

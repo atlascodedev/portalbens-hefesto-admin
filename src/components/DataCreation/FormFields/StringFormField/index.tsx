@@ -1,19 +1,7 @@
 import { TextField } from "@material-ui/core";
 import React from "react";
 import { FormFieldComponentProps } from "../Root";
-import styled from "styled-components";
-
-const TextFieldWrapper = styled.div`
-  .MuiInputBase-root {
-    min-width: 250px;
-  }
-
-  @media (min-width: 1024px) {
-    .MuiInputBase-root {
-      min-width: 400px;
-    }
-  }
-`;
+import { TextFieldWrapper } from "../TextFormField";
 
 const StringFormField = ({
   formFieldType,
