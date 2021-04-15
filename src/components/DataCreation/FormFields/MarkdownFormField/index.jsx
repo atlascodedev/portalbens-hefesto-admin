@@ -75,6 +75,8 @@ const MarkdownFormField = (props) => {
 
   const handleMarkdownValueChange = (value) => {
     setFieldValue(name, value, true);
+
+
   };
 
   return (

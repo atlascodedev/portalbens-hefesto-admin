@@ -8,7 +8,7 @@ export const getEntry = async (req: Request, res: Response) => {
     .doc(collectionRef)
     .collection("entries")
     .get()
-    .then((collectionSnapshot) => {
+    .then((collectionSnapshot) => {''
       let dataArrayInternal: any[] = [];
 
       collectionSnapshot.forEach((collectionData) => {

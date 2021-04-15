@@ -211,6 +211,13 @@ const testimonialCollection: DashboardItem = {
       name: "testimonialText",
       hidden: true,
     },
+    {
+      groupID: "infoTestimonial",
+      fieldType: "string",
+      label: "Cidade/Estado",
+      name: "testimonialLocation",
+      hidden: true,
+    },
   ],
 };
 
