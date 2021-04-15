@@ -8,9 +8,10 @@ import validURL from "../../../../../helper/isURL";
 const ImageFieldComponentRoot = styled.div`
   display: flex;
   width: fit-content;
+  flex-direction: column;
 
   @media (min-width: 1024px) {
-    grid-column: initial;
+    flex-direction: row;
   }
 `;
 
@@ -73,12 +74,19 @@ const ImageFieldComponentFieldDescription = styled(motion.div)`
 `;
 
 const imageFieldContainer: Variants = {
-  initial: { x: "-100%" },
+  initial: {
+    x: window.innerWidth > 1024 ? "-100%" : 0,
+    y: window.innerWidth < 1024 ? "-90%" : 0,
+    opacity: 0,
+  },
 
   open: {
+    opacity: 1,
     x: 0,
+    y: 0,
     transition: {
-      bounce: 1,
+      stiffness: 200,
+      damping: 100,
     },
   },
 };
