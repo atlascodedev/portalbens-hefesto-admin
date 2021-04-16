@@ -86,11 +86,8 @@ const ListFormItemRoot = styled.div`
   width: 100%;
   align-items: flex-end;
   justify-content: space-between;
+  padding-top: 10px;
 `;
-
-interface ListFormItemLayoutProps {
-  children: React.ReactNode;
-}
 
 const expandButtonVariant = {
   initial: { scale: 1, transition: { duration: 0.3 } },
@@ -126,11 +123,20 @@ const attributeListContainerVariants: Variants = {
   },
 };
 
-export const ListFormItemLayout = ({ children }: ListFormItemLayoutProps) => {
+interface ListFormItemLayoutProps {
+  children: React.ReactNode;
+  removeField: () => void;
+}
+
+export const ListFormItemLayout = ({
+  children,
+  removeField,
+}: ListFormItemLayoutProps) => {
   return (
     <ListFormItemRoot>
       {children}
       <ListFormFieldDeleteButton
+        onClick={removeField}
         variants={deleteButtonVariants}
         initial="initial"
         whileHover="hover"
@@ -142,9 +148,15 @@ export const ListFormItemLayout = ({ children }: ListFormItemLayoutProps) => {
   );
 };
 
-interface ListFormFieldLayoutProps {}
+interface ListFormFieldLayoutProps {
+  children: React.ReactNode;
+  insertField: () => void;
+}
 
-const ListFormFieldLayout = ({}: ListFormFieldLayoutProps) => {
+const ListFormFieldLayout = ({
+  children,
+  insertField,
+}: ListFormFieldLayoutProps) => {
   const [listVisibility, setListVisibility] = React.useState<boolean>(false);
 
   const toggleListVisibility = () => {
@@ -161,6 +173,7 @@ const ListFormFieldLayout = ({}: ListFormFieldLayoutProps) => {
           initial="initial"
           whileHover="hover"
           whileTap="pressed"
+          onClick={insertField}
         >
           <SvgIcon component={Add} />
         </ListFormFieldAddButton>
@@ -179,18 +192,7 @@ const ListFormFieldLayout = ({}: ListFormFieldLayoutProps) => {
         variants={attributeListContainerVariants}
         animate={listVisibility ? "expanded" : "initial"}
       >
-        <div style={{ padding: "40px", width: "100%" }}>
-          <ListFormItemLayout>
-            <TextField
-              style={{
-                minWidth: "75%",
-                marginLeft: "20px",
-                marginRight: "20px",
-              }}
-              label="Campo aqui"
-            />
-          </ListFormItemLayout>
-        </div>
+        <div style={{ padding: "40px", width: "100%" }}>{children}</div>
       </ListFormContent>
     </ListFormFieldRoot>
   );

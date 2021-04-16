@@ -1,9 +1,10 @@
-import { Button, TextField, Tooltip } from "@material-ui/core";
+import { Button, ListItemAvatar, TextField, Tooltip } from "@material-ui/core";
 import { FieldArray, Form } from "formik";
+import { indexOf } from "lodash";
 import React from "react";
 import { FormFieldComponentProps } from "../Root";
 import { TextFieldWrapper } from "../TextFormField";
-import ListFormFieldLayout from "./styles";
+import ListFormFieldLayout, { ListFormItemLayout } from "./styles";
 
 const StringArrayFormField = ({
   name,
@@ -32,9 +33,50 @@ const StringArrayFormField = ({
     setFieldValue(name, [...currentValueArray], false);
   };
 
+  const handleRemoveAtIndex = (indexArg: number) => {
+    let currentFieldArray: any[] = [...value];
+
+    currentFieldArray.splice(indexArg, 1);
+
+    console.log(currentFieldArray);
+
+    setFieldValue(name, [...currentFieldArray], true);
+  };
+
   return (
     <div>
-      <ListFormFieldLayout />   
+      <ListFormFieldLayout insertField={handleAddNewField}>
+        {(value as any[]).length > 0 ? (
+          (value as any[]).map((value, index: number) => {
+            return (
+              <ListFormItemLayout
+                key={index}
+                removeField={() => handleRemoveAtIndex(index)}
+              >
+                <TextField
+                  helperText={helperText}
+                  error={error}
+                  value={`${value}`}
+                  name={`${name}.${index}`}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setFieldValue(`${name}.${index}`, event.target.value)
+                  }
+                  style={{
+                    minWidth: "75%",
+                    marginLeft: "20px",
+                    marginRight: "20px",
+                  }}
+                  label="Campo aqui"
+                />
+              </ListFormItemLayout>
+            );
+          })
+        ) : (
+          <div style={{ textAlign: "center" }}>
+            Parece que ainda não há nenhum item na lista.
+          </div>
+        )}
+      </ListFormFieldLayout>
     </div>
     // <TextFieldWrapper>
     //   <div
