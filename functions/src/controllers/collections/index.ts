@@ -8,7 +8,8 @@ export const getEntry = async (req: Request, res: Response) => {
     .doc(collectionRef)
     .collection("entries")
     .get()
-    .then((collectionSnapshot) => {''
+    .then((collectionSnapshot) => {
+      ("");
       let dataArrayInternal: any[] = [];
 
       collectionSnapshot.forEach((collectionData) => {
@@ -53,5 +54,53 @@ export const getEntryByID = async (
     })
     .catch((error) => {
       return res.status(400).json({ error: error, message: error.message });
+    });
+};
+
+type GetEntryWhereRequestParams = {
+  collectionRef: string;
+};
+
+type GetEntryWhereQueryStrings = {};
+
+type GetEntryWhereBody = {
+  fieldName: string;
+  fieldValue: string;
+};
+
+export const getEntryWhere = async (
+  req: Request<
+    GetEntryWhereRequestParams,
+    {},
+    GetEntryWhereBody,
+    GetEntryWhereQueryStrings
+  >,
+  res: Response
+) => {
+  const collectionRef: string = req.params.collectionRef;
+
+  if (!req.body.fieldName || !req.body.fieldValue) {
+    return res.status(400).json({
+      message:
+        "Invalid request format. You must provide a fieldName and a fieldValue",
+    });
+  } 
+
+  db.collection("collections")
+    .doc(collectionRef)
+    .collection("entries")
+    .where(req.body.fieldName, "==", req.body.fieldValue)
+    .get()
+    .then((entrySnapshopt) => {
+      let entryDataInternal: any;
+
+      entrySnapshopt.forEach((entryRef) => {
+        entryDataInternal = entryRef.data();
+      });
+
+      return res.json(entryDataInternal).status(200);
+    })
+    .catch((error) => {
+      return res.status(500).json({ error: error, message: error.message });
     });
 };
