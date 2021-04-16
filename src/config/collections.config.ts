@@ -33,6 +33,7 @@ export interface DataCreationField {
   private?: boolean;
   required?: boolean;
   currencyPrefix?: string;
+  slug?: boolean;
   groupID?: string;
   name: string;
 }
@@ -196,6 +197,7 @@ const testimonialCollection: DashboardItem = {
       fieldType: "string",
       label: "Nome do cliente",
       name: "testimonialName",
+      slug: true,
     },
     {
       groupID: "infoTestimonial",

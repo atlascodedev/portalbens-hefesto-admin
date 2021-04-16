@@ -90,7 +90,7 @@ export const getEntryWhere = async (
   db.collection("collections")
     .doc(collectionRef)
     .collection("entries")
-    .where(req.body.fieldName, "==", converToSlug(req.body.fieldValue))
+    .where(req.body.fieldName, "==", req.body.fieldValue)
     .get()
     .then((entrySnapshopt) => {
       let entryDataInternal: any;

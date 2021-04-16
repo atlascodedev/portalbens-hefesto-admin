@@ -7,11 +7,13 @@ import { ThunkAction } from "redux-thunk";
 import { RootState } from "../..";
 import {
   Category,
+  collections,
   DashboardItem,
   DataCreationField,
 } from "../../../config/collections.config";
 import { db } from "../../../firebase";
 import { categoryLabelFromUUIDPath } from "../../../helper/cateroyLabelFromUUIDPath";
+import converToSlug from "../../../helper/convertToSlug";
 import { GlobalStateActionTypes } from "../../globalUI/types";
 import {
   ActiveCollectionAttributesObserverActionTypes,
@@ -75,8 +77,21 @@ export const newEntryCreate = (
 
     const { activeCollection } = getState();
     const transactionUUID: string = nanoid();
+    let slug: string = "";
 
-    let newEntry: any = { ...data, uuid: transactionUUID };
+    activeCollection.fields.forEach((value, index) => {
+      if (value.slug) {
+        slug = converToSlug(data[value.name]);
+      }
+    });
+
+    let newEntry: any = {};
+
+    if (slug.length <= 0) {
+      newEntry = { ...data, uuid: transactionUUID };
+    } else {
+      newEntry = { ...data, uuid: transactionUUID, slug: slug };
+    }
 
     db.collection("collections")
       .doc(activeCollection.collectionRef)
@@ -104,6 +119,21 @@ export const entryUpdate = (
     const { activeCollection } = getState();
 
     const transactionUUID: string = activeCollection.entrySelected.entryUUID;
+    let slug: string = "";
+
+    activeCollection.fields.forEach((value, index) => {
+      if (value.slug) {
+        slug = converToSlug(data[value.name]);
+      }
+    });
+
+    let updatedEntry: any = {};
+
+    if (slug.length <= 0) {
+      updatedEntry = { ...data };
+    } else {
+      updatedEntry = { ...data, slug: slug };
+    }
 
     db.collection("collections")
       .doc(activeCollection.collectionRef)
@@ -113,7 +143,7 @@ export const entryUpdate = (
       .then((entrySnapshot) => {
         entrySnapshot.forEach((docRef) => {
           docRef.ref
-            .update(data)
+            .update(updatedEntry)
             .then(() => {
               dispatch({
                 type: ACTIVE_COLLECTION_ENTRY_UPDATE_SUCCESS,
@@ -312,6 +342,7 @@ export const setupActiveCollection = (
       hasCategories: activeCollection.hasCategories
         ? activeCollection.hasCategories
         : false,
+
       isCreating: false,
       isUpdating: false,
       isViewing: false,
