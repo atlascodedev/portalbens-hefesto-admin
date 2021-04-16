@@ -248,6 +248,12 @@ const partnersCollection: DashboardItem = {
       groupID: "partnerInfo",
       hidden: true,
     },
+    {
+      fieldType: "list",
+      label: "Lista",
+      name: "simpleList",
+      groupID: "partnerInfo",
+    },
   ],
 };
 

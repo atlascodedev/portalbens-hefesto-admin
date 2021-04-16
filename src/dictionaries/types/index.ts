@@ -10,7 +10,8 @@ export type FormFieldTypes =
   | "radio"
   | "checkbox"
   | "date"
-  | "time";
+  | "time"
+  | "list";
 
 export type IconTypes =
   | "AttachMoney"

@@ -46,6 +46,8 @@ const EntryCreation = ({
 
   // React.useEffect(() => {}, [formik.values, formik.errors, formik.touched]);
 
+  console.log(formik.values);
+
   return (
     <AtlasBackdrop
       open={isCreating || isUpdating}

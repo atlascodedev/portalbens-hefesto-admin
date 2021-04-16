@@ -33,6 +33,7 @@ const useFormGenerator = (): FormGenerator => {
     validationSchema: Yup.object(validationSchema),
     onSubmit: (value, actions) => console.log("You submitted"),
     enableReinitialize: true,
+
     validateOnMount: true,
   });
 
@@ -58,6 +59,16 @@ const useFormGenerator = (): FormGenerator => {
 
     for (const field of fields!) {
       switch (field.fieldType) {
+        case "list":
+          initialValuesInner[field.name] = [];
+
+          validationSchemaInner[field.name] = Yup.array().min(
+            1,
+            "É necessário escolher ao menos 1"
+          );
+
+          break;
+
         case "time":
           initialValuesInner[field.name] = "";
 
