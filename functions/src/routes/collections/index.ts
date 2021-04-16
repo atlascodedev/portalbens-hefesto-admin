@@ -14,6 +14,6 @@ collectionsRouter.get("/entries/:collectionRef", cors(), getEntry);
 
 collectionsRouter.get("/entries/:collectionRef/:id", cors(), getEntryByID);
 
-collectionsRouter.get("/entries/:collectionRef/where", cors(), getEntryWhere);
+collectionsRouter.post("/entries/:collectionRef/where", cors(), getEntryWhere);
 
 export default collectionsRouter;
