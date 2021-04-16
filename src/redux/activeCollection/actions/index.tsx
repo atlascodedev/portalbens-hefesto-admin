@@ -336,6 +336,7 @@ export const setupActiveCollection = (
       entries: [],
       categories: [],
       fields: activeCollection.fields,
+      showID: activeCollection.showID ? activeCollection.showID : false,
       hasAttributes: activeCollection.hasAttributes
         ? activeCollection.hasAttributes
         : false,

@@ -32,7 +32,11 @@ const generateEntriesDataGridColumns = (
     entriesDataGridColumns.push(dataGridColumnItemInternal);
   }
 
-  entriesDataGridColumns.push({ field: "uuid", title: "uuid", hidden: true });
+  entriesDataGridColumns.unshift({
+    field: "uuid",
+    title: "ID",
+    hidden: !activeCollection[0].showID,
+  });
 
   entriesDataGridColumns.push({
     field: "visualizeComponent",

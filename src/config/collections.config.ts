@@ -45,6 +45,7 @@ export interface DataCreationItem extends DashboardItemRoot {
   hasCategories?: boolean | null;
   hasAttributes?: boolean | null;
   fieldGroups?: FieldGroup[];
+  showID?: boolean;
 }
 
 export interface Attribute {
@@ -70,6 +71,7 @@ export interface Category {
 export type DashboardItem = DataCreationItem;
 
 const cardCollection: DashboardItem = {
+  showID: true,
   collectionRef: "cartas",
   itemID: "cartas_id",
   itemCategory: "creation",
@@ -184,6 +186,7 @@ const blogCollection: DashboardItem = {
 };
 
 const testimonialCollection: DashboardItem = {
+  showID: true,
   collectionRef: "testimonials",
   itemCategory: "creation",
   itemID: "portalTestimonials",
