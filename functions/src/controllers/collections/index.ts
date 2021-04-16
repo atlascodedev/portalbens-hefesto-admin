@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { db } from "../../firebase/";
+import converToSlug from "../../helper/converToSlug";
 
 export const getEntry = async (req: Request, res: Response) => {
   const collectionRef: string = req.params.collectionRef;
@@ -84,12 +85,12 @@ export const getEntryWhere = async (
       message:
         "Invalid request format. You must provide a fieldName and a fieldValue",
     });
-  } 
+  }
 
   db.collection("collections")
     .doc(collectionRef)
     .collection("entries")
-    .where(req.body.fieldName, "==", req.body.fieldValue)
+    .where(req.body.fieldName, "==", converToSlug(req.body.fieldValue))
     .get()
     .then((entrySnapshopt) => {
       let entryDataInternal: any;
