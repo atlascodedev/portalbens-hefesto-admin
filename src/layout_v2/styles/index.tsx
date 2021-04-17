@@ -4,8 +4,15 @@ import { motion, Variants } from "framer-motion";
 import { DashboardItem } from "../../config/collections.config";
 import IconComponent from "../../components/Util/IconComponent";
 import { IconTypes } from "../../dictionaries/types";
-import { Fade, SvgIcon } from "@material-ui/core";
-import { Help, MenuRounded, Notifications, Person } from "@material-ui/icons";
+import { Fade, SvgIcon, SvgIconTypeMap, Tooltip } from "@material-ui/core";
+import {
+  Autorenew,
+  Help,
+  MenuRounded,
+  Notifications,
+  Person,
+  Settings,
+} from "@material-ui/icons";
 import LayoutDrawer from "../Drawer";
 import getCurrentPath from "../../helper/currentPath";
 import { Link } from "@reach/router";
@@ -15,6 +22,7 @@ import NotificationList from "../NotificationList";
 import { remove } from "lodash";
 import AppInfo from "../AppInfo/Main";
 import hefestoLogo from "../../images/hefesto-logo.svg";
+import { OverridableComponent } from "@material-ui/core/OverridableComponent";
 
 export const AppLayoutSidebarContainer = styled(motion.div)`
   min-width: 15%;
@@ -164,15 +172,19 @@ const AppLayoutContent = styled.div`
   overflow-y: scroll;
 `;
 
-const AppSidebarItemRoot = styled.div`
+interface AppSidebarItemRootProps {
+  disabled?: boolean;
+}
+
+const AppSidebarItemRoot = styled.div<AppSidebarItemRootProps>`
   transition: all 0.3s ease-in-out;
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
   margin-top: 30px;
   margin-bottom: 30px;
-
+  color: ${(props) => (props.disabled ? "rgba(0, 0, 0, 0.4)" : "inherit")};
   @media (min-width: 1024px) {
     justify-content: flex-start;
   }
@@ -201,6 +213,46 @@ const AppSidebarItemLabelContainer = styled.div<AppsidebarItemActiveProps>`
     display: block;
   }
 `;
+
+const SidebarItemIconContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const SidebarItemLabelContainer = styled.div`
+  margin-left: 10px;
+
+  transition: all 0.3s ease-in-out;
+
+  @media (min-width: 1024px) {
+    display: block;
+  }
+`;
+
+interface SidebarItemLayoutProps {
+  actionFn?: (...args: any[]) => void;
+  icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
+  label?: string;
+  disabled?: boolean;
+}
+
+export const SidebarItemLayout = ({
+  actionFn = () => console.log("no function was passed as props"),
+  icon = Autorenew,
+  label = "Placeholder label",
+  disabled = false,
+}: SidebarItemLayoutProps) => {
+  return (
+    <Tooltip title={disabled ? "Item desabilitado" : ""}>
+      <AppSidebarItemRoot disabled={disabled} onClick={actionFn}>
+        <SidebarItemIconContainer>
+          <SvgIcon component={icon} />
+        </SidebarItemIconContainer>
+        <SidebarItemLabelContainer>{label}</SidebarItemLabelContainer>
+      </AppSidebarItemRoot>
+    </Tooltip>
+  );
+};
 
 const AppInfoContainer = styled.div`
   width: 100%;
@@ -407,7 +459,6 @@ export const AppLayoutRoot = ({
   return (
     <AppLayoutRootContainer>
       <LayoutDrawer
-      
         sidebarItems={sidebarItems}
         logo={logo}
         open={drawerState}
@@ -430,6 +481,17 @@ export const AppLayoutRoot = ({
             />
           );
         })}
+
+        <div
+          style={{
+            height: "100%",
+          }}
+        >
+          <div style={{ position: "absolute", bottom: "5%" }}>
+            <SidebarItemLayout icon={Autorenew} label="Atualizar website" />
+            <SidebarItemLayout disabled icon={Settings} label="Configurações" />
+          </div>
+        </div>
       </AppLayoutSidebarContainer>
       <AppLayoutSidebarContainerAnchor></AppLayoutSidebarContainerAnchor>
 

@@ -78,13 +78,12 @@ runTerminalCommand(
 runTerminalCommand(
   {
     command: "tsc",
-    args: [],
+    args: ["--watch"],
     options: { cwd: resolve(process.cwd(), "functions"), shell: true },
   },
   { bg_color_hex: "#007ACC", color_hex: "#FFFFFF" },
   "Typescript cloud functions compilation"
 );
-
 
 // const process = spawn(...); // long running process
 // // ... later...
