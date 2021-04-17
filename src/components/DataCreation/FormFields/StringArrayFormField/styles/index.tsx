@@ -186,50 +186,48 @@ const ListBaseFormFieldLayout = ({
   };
 
   return (
-    <AnimateSharedLayout>
-      <motion.div layout>
-        <ListFormFieldRoot>
-          <ListFormFieldHeader>
-            <ListFormFieldLabel>{_.capitalize(label)}</ListFormFieldLabel>
+    <motion.div layout="position">
+      <ListFormFieldRoot>
+        <ListFormFieldHeader>
+          <ListFormFieldLabel>{_.capitalize(label)}</ListFormFieldLabel>
 
-            <ListFormFieldAddButton
-              variants={addButtonVariants}
-              initial="initial"
-              whileHover="hover"
-              whileTap="pressed"
-              onClick={handleInsertField}
-            >
-              <SvgIcon component={Add} />
-            </ListFormFieldAddButton>
-            <ListFormFieldExpandButton
-              onClick={toggleListVisibility}
-              variants={expandButtonVariant}
-              whileHover="hover"
-              whileTap="pressed"
-              animate={listVisibility ? "expanded" : "initial"}
-            >
-              <SvgIcon component={ExpandMore} />
-            </ListFormFieldExpandButton>
-          </ListFormFieldHeader>
-          <ListFormContent
+          <ListFormFieldAddButton
+            variants={addButtonVariants}
             initial="initial"
-            variants={attributeListContainerVariants}
+            whileHover="hover"
+            whileTap="pressed"
+            onClick={handleInsertField}
+          >
+            <SvgIcon component={Add} />
+          </ListFormFieldAddButton>
+          <ListFormFieldExpandButton
+            onClick={toggleListVisibility}
+            variants={expandButtonVariant}
+            whileHover="hover"
+            whileTap="pressed"
             animate={listVisibility ? "expanded" : "initial"}
           >
-            <div
-              style={{
-                padding: "40px",
-                width: "100%",
-                paddingLeft: "20px",
-                paddingRight: "20px",
-              }}
-            >
-              {children}
-            </div>
-          </ListFormContent>
-        </ListFormFieldRoot>
-      </motion.div>
-    </AnimateSharedLayout>
+            <SvgIcon component={ExpandMore} />
+          </ListFormFieldExpandButton>
+        </ListFormFieldHeader>
+        <ListFormContent
+          initial="initial"
+          variants={attributeListContainerVariants}
+          animate={listVisibility ? "expanded" : "initial"}
+        >
+          <div
+            style={{
+              padding: "40px",
+              width: "100%",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+            }}
+          >
+            {children}
+          </div>
+        </ListFormContent>
+      </ListFormFieldRoot>
+    </motion.div>
   );
 };
 

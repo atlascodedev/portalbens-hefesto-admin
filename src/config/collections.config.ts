@@ -265,12 +265,14 @@ const partnersCollection: DashboardItem = {
         fieldLabel: "Nome do ingrediente",
         label: "Lista de ingredientes",
       },
+      hidden: true,
     },
     {
       fieldType: "installment",
       label: "Another list",
       name: "installmentList",
       groupID: "partnerInfo",
+      hidden: true,
     },
   ],
 };

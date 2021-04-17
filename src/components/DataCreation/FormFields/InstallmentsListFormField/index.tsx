@@ -43,76 +43,64 @@ const InstallmentsListFormField = ({
   };
 
   return (
-    <ListBaseFormFieldLayout insertField={handleInsertField} label={"Label"}>
+    <ListBaseFormFieldLayout insertField={handleInsertField} label={"Parcelas"}>
       {(value as any[]).length > 0 ? (
-        <AnimatePresence initial={false}>
-          {(value as any[]).map((valueInner, index: number) => {
-            return (
-              <motion.div
-                key={valueInner["id"]}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                exit={{ opacity: 0, x: -100 }}
-                initial={{ opacity: 0, x: -100 }}
+        (value as any[]).map((valueInner, index: number) => {
+          return (
+            <motion.div
+              key={valueInner["id"]}
+              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: -100 }}
+            >
+              <ListFormItemLayout
+                key={index}
+                alignCenter
+                removeField={() => handleRemoveAtIndex(valueInner["id"])}
               >
-                <ListFormItemLayout
-                  key={index}
-                  alignCenter
-                  removeField={() => handleRemoveAtIndex(valueInner["id"])}
-                >
-                  <InstallmentFormFieldWrapper>
-                    <NumberFormat
-                      key={index}
-                      className="installmentNumber"
-                      variant="outlined"
-                      label="Número de parcelas"
-                      isNumericString
-                      value={valueInner?.["installmentMonths"]}
-                      customInput={TextField}
-                      name={`${name}.${index}.installmentMonths`}
-                      onValueChange={({
-                        floatValue,
-                        formattedValue,
-                        value,
-                      }) => {
-                        setFieldValue(
-                          `${name}.${index}.installmentMonths`,
-                          value
-                        );
-                      }}
-                    />
-                    <SvgIcon component={Clear} />
+                <InstallmentFormFieldWrapper>
+                  <NumberFormat
+                    key={index}
+                    className="installmentNumber"
+                    variant="outlined"
+                    label="Número de parcelas"
+                    isNumericString
+                    value={valueInner?.["installmentMonths"]}
+                    customInput={TextField}
+                    name={`${name}.${index}.installmentMonths`}
+                    onValueChange={({ floatValue, formattedValue, value }) => {
+                      setFieldValue(
+                        `${name}.${index}.installmentMonths`,
+                        value
+                      );
+                    }}
+                  />
+                  <SvgIcon component={Clear} />
 
-                    <NumberFormat
-                      value={valueInner?.["installmentValue"]}
-                      name={`${name}.${index}.installmentValue`}
-                      onValueChange={({
-                        floatValue,
-                        formattedValue,
-                        value,
-                      }) => {
-                        setFieldValue(
-                          `${name}.${index}.installmentValue`,
-                          floatValue
-                        );
-                      }}
-                      className="installmentValue"
-                      variant="outlined"
-                      label="Valor das parcelas"
-                      thousandSeparator={"."}
-                      decimalSeparator={","}
-                      allowNegative={false}
-                      fixedDecimalScale={true}
-                      prefix={"R$"}
-                      decimalScale={2}
-                      customInput={TextField}
-                    />
-                  </InstallmentFormFieldWrapper>
-                </ListFormItemLayout>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
+                  <NumberFormat
+                    value={valueInner?.["installmentValue"]}
+                    name={`${name}.${index}.installmentValue`}
+                    onValueChange={({ floatValue, formattedValue, value }) => {
+                      setFieldValue(
+                        `${name}.${index}.installmentValue`,
+                        floatValue
+                      );
+                    }}
+                    className="installmentValue"
+                    variant="outlined"
+                    label="Valor das parcelas"
+                    thousandSeparator={"."}
+                    decimalSeparator={","}
+                    allowNegative={false}
+                    fixedDecimalScale={true}
+                    prefix={"R$"}
+                    decimalScale={2}
+                    customInput={TextField}
+                  />
+                </InstallmentFormFieldWrapper>
+              </ListFormItemLayout>
+            </motion.div>
+          );
+        })
       ) : (
         <div style={{ textAlign: "start" }}>
           Parece que ainda não há nenhum item na lista.

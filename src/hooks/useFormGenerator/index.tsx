@@ -60,7 +60,12 @@ const useFormGenerator = (): FormGenerator => {
     for (const field of fields!) {
       switch (field.fieldType) {
         case "installment":
-          initialValuesInner[field.name] = "";
+          if (isUpdating) {
+            initialValuesInner[field.name] =
+              entrySelected.entryValues[field.name];
+          } else {
+            initialValuesInner[field.name] = "";
+          }
 
           validationSchemaInner[field.name] = Yup.array().of(
             Yup.object({
@@ -77,7 +82,12 @@ const useFormGenerator = (): FormGenerator => {
           break;
 
         case "list":
-          initialValuesInner[field.name] = [];
+          if (isUpdating) {
+            initialValuesInner[field.name] =
+              entrySelected.entryValues[field.name];
+          } else {
+            initialValuesInner[field.name] = [];
+          }
 
           validationSchemaInner[field.name] = Yup.array().min(
             1,
