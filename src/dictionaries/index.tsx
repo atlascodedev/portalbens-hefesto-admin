@@ -53,6 +53,7 @@ import CheckboxFormField from "../components/DataCreation/FormFields/CheckboxFor
 import DateFormField from "../components/DataCreation/FormFields/DateFormField";
 import TimeFormField from "../components/DataCreation/FormFields/TimeFormField";
 import StringArrayFormField from "../components/DataCreation/FormFields/StringArrayFormField";
+import InstallmentsListFormField from "../components/DataCreation/FormFields/InstallmentsListFormField";
 
 export const IconDictonary: Record<
   IconTypes,
@@ -116,4 +117,5 @@ export const FormFieldDictionary: Record<
   date: DateFormField,
   time: TimeFormField,
   list: StringArrayFormField,
+  installment: InstallmentsListFormField,
 };

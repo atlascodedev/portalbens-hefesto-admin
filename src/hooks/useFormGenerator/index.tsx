@@ -59,6 +59,23 @@ const useFormGenerator = (): FormGenerator => {
 
     for (const field of fields!) {
       switch (field.fieldType) {
+        case "installment":
+          initialValuesInner[field.name] = "";
+
+          validationSchemaInner[field.name] = Yup.array().of(
+            Yup.object({
+              installmentMonths: Yup.number()
+                .integer("É preciso ser um número")
+                .required("Este campo é obrigatório"),
+
+              installmentValue: Yup.string().required(
+                "Este campo é obrigatório"
+              ),
+            })
+          );
+
+          break;
+
         case "list":
           initialValuesInner[field.name] = [];
 

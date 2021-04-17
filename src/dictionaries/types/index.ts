@@ -11,7 +11,8 @@ export type FormFieldTypes =
   | "checkbox"
   | "date"
   | "time"
-  | "list";
+  | "list"
+  | "installment";
 
 export type IconTypes =
   | "AttachMoney"

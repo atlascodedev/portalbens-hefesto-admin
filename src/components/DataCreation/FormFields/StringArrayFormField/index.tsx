@@ -1,25 +1,32 @@
-import { Button, ListItemAvatar, TextField, Tooltip } from "@material-ui/core";
+import {
+  Button,
+  Fade,
+  Grow,
+  ListItemAvatar,
+  Slide,
+  TextField,
+  Tooltip,
+} from "@material-ui/core";
 import { FieldArray, Form } from "formik";
+import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 import { indexOf } from "lodash";
+import { nanoid } from "nanoid";
 import React from "react";
 import { FormFieldComponentProps } from "../Root";
 import { TextFieldWrapper } from "../TextFormField";
-import ListFormFieldLayout, { ListFormItemLayout } from "./styles";
+import ListBaseFormFieldLayout, { ListFormItemLayout } from "./styles";
 
 const StringArrayFormField = ({
   name,
-  formFieldType,
   helperText,
   id,
   label,
   onBlur,
   onChange,
-  setFieldError,
-  setFieldTouched,
   setFieldValue,
-  validateField,
   value,
   error,
+  listOptions,
 }: FormFieldComponentProps) => {
   const handleAddNewField = () => {
     setFieldValue(name, [...value, ""], false);
@@ -44,13 +51,20 @@ const StringArrayFormField = ({
   };
 
   return (
-    <div>
-      <ListFormFieldLayout insertField={handleAddNewField}>
-        {(value as any[]).length > 0 ? (
-          (value as any[]).map((value, index: number) => {
-            return (
+    <ListBaseFormFieldLayout
+      label={listOptions?.label ?? ""}
+      insertField={handleAddNewField}
+    >
+      {(value as any[]).length > 0 ? (
+        (value as any[]).map((value, index: number) => {
+          return (
+            <motion.div
+              key={index}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, x: -100 }}
+            >
               <ListFormItemLayout
-                key={index}
                 removeField={() => handleRemoveAtIndex(index)}
               >
                 <TextField
@@ -66,86 +80,18 @@ const StringArrayFormField = ({
                     marginLeft: "20px",
                     marginRight: "20px",
                   }}
-                  label="Campo aqui"
+                  label={listOptions?.fieldLabel ?? ""}
                 />
               </ListFormItemLayout>
-            );
-          })
-        ) : (
-          <div style={{ textAlign: "center" }}>
-            Parece que ainda não há nenhum item na lista.
-          </div>
-        )}
-      </ListFormFieldLayout>
-    </div>
-    // <TextFieldWrapper>
-    //   <div
-    //     style={{
-    //       display: "flex",
-    //       flexDirection: "column",
-    //       alignItems: "center",
-    //       border: "1px solid rgba(93, 109, 124, 0.6)",
-    //       padding: "35px",
-    //       borderRadius: "6px",
-    //       transition: "all 0.5s ease",
-    //     }}
-    //   >
-    //     {value.length > 0 ? (
-    //       value.map((item: any, index: number) => {
-    //         return (
-    //           <TextField
-    //             style={{ marginBottom: "10px" }}
-    //             variant="outlined"
-    //             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-    //               setFieldValue(`${name}.${index}`, event.target.value)
-    //             }
-    //             key={index}
-    //             name={`${name}.${index}`}
-    //             label={label}
-    //           />
-    //         );
-    //       })
-    //     ) : (
-    //       <div style={{ textAlign: "center" }}>
-    //         {" "}
-    //         Ainda não há nenhum item na lista, clique em adicionar para começar.
-    //       </div>
-    //     )}
-
-    //     <div
-    //       style={{ marginTop: "15px", display: "flex", flexDirection: "row" }}
-    //     >
-    //       <div style={{ marginRight: "10px" }}>
-    //         <Button
-    //           onClick={handleAddNewField}
-    //           color="primary"
-    //           variant="contained"
-    //         >
-    //           Adicionar
-    //         </Button>
-    //       </div>
-
-    //       <div style={{ marginLeft: "10px" }}>
-    //         <Tooltip
-    //           title={
-    //             value.length <= 0 ? "Não há mais nenhum item para remover" : ""
-    //           }
-    //         >
-    //           <span>
-    //             <Button
-    //               disabled={Boolean(value.length <= 0)}
-    //               onClick={handleRemoveLast}
-    //               color="primary"
-    //               variant="outlined"
-    //             >
-    //               Remover último
-    //             </Button>
-    //           </span>
-    //         </Tooltip>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </TextFieldWrapper>
+            </motion.div>
+          );
+        })
+      ) : (
+        <div style={{ textAlign: "start" }}>
+          Parece que ainda não há nenhum item na lista.
+        </div>
+      )}
+    </ListBaseFormFieldLayout>
   );
 };
 

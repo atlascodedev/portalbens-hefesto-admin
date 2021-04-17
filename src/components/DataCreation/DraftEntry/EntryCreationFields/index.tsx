@@ -1,5 +1,5 @@
 import { Fade } from "@material-ui/core";
-import { FormikContextType, FormikProvider } from "formik";
+import { FormikContextType } from "formik";
 import React from "react";
 import {
   DataCreationField,
@@ -66,6 +66,11 @@ const EntryCreationFields = React.memo(
                             value={formik.values[fieldCollection.name]}
                             name={fieldCollection.name}
                             label={fieldCollection.label}
+                            listOptions={
+                              fieldCollection.fieldType == "list"
+                                ? fieldCollection.listOptions
+                                : null
+                            }
                             formFieldType={fieldCollection.fieldType}
                             checkboxOptions={
                               fieldCollection.fieldType == "checkbox"

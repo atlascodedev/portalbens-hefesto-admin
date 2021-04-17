@@ -29,6 +29,7 @@ export interface DataCreationField {
   selectOptions?: Array<string>;
   radioOptions?: Array<RadioField>;
   checkboxOptions?: Array<CheckboxField>;
+  listOptions?: ListFieldOptions;
   hidden?: boolean;
   private?: boolean;
   required?: boolean;
@@ -36,6 +37,13 @@ export interface DataCreationField {
   slug?: boolean;
   groupID?: string;
   name: string;
+}
+
+export interface ListFieldOptions {
+  label: string;
+  fieldLabel: string;
+  min?: number;
+  max?: number;
 }
 
 export interface DataCreationItem extends DashboardItemRoot {
@@ -252,6 +260,16 @@ const partnersCollection: DashboardItem = {
       fieldType: "list",
       label: "Lista",
       name: "simpleList",
+      groupID: "partnerInfo",
+      listOptions: {
+        fieldLabel: "Nome do ingrediente",
+        label: "Lista de ingredientes",
+      },
+    },
+    {
+      fieldType: "installment",
+      label: "Another list",
+      name: "installmentList",
       groupID: "partnerInfo",
     },
   ],

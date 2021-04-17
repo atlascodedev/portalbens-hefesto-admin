@@ -1,13 +1,14 @@
 import styled from "styled-components";
-import { motion, Variants } from "framer-motion";
+import { AnimateSharedLayout, motion, Variants } from "framer-motion";
 import React from "react";
 import { SvgIcon, TextField, Tooltip } from "@material-ui/core";
 import { Add, Delete, DeleteForever, ExpandMore } from "@material-ui/icons";
+import _ from "lodash";
 
 const ListFormFieldRoot = styled.div`
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 300px;
   height: auto;
 
   max-height: 1500px;
@@ -16,15 +17,20 @@ const ListFormFieldRoot = styled.div`
   /* padding-right: 15px; */
   /* box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.25); */
   border: 1px solid dimgray;
+  border-color: rgba(0, 0, 0, 0.23);
   overflow: hidden;
   /* padding: 10px; */
   color: dimgray;
-
   margin-bottom: 10%;
+  position: relative;
+
+  @media (min-width: 1024px) {
+    width: 400px;
+  }
 `;
 
 const ListFormFieldHeader = styled.div`
-  height: 75px;
+  height: 60px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -35,12 +41,9 @@ const ListFormFieldLabel = styled.div`
   justify-content: flex-start;
   align-items: center;
   flex-grow: 1;
-  font-size: 18px;
-  padding-left: 40px;
-
-  @media (min-width: 1024px) {
-    font-size: 22px;
-  }
+  font-size: 1rem;
+  padding-left: 20px;
+  color: rgba(0, 0, 0, 0.54);
 `;
 
 const ListFormFieldExpandButton = styled(motion.div)`
@@ -81,10 +84,15 @@ const ListFormContent = styled(motion.div)`
   align-items: center;
 `;
 
-const ListFormItemRoot = styled.div`
+interface ListFormItemRootProps {
+  alignCenter?: boolean;
+}
+
+const ListFormItemRoot = styled.div<ListFormItemRootProps>`
   display: flex;
   width: 100%;
-  align-items: flex-end;
+  position: relative;
+  align-items: ${(props) => (props.alignCenter ? "center" : "flex-end")};
   justify-content: space-between;
   padding-top: 10px;
 `;
@@ -126,14 +134,18 @@ const attributeListContainerVariants: Variants = {
 interface ListFormItemLayoutProps {
   children: React.ReactNode;
   removeField: () => void;
+  alignCenter?: boolean;
 }
+
+// type ListFormItemLayoutPropsRef = React.HTMLProps<ListFormItemLayoutProps>
 
 export const ListFormItemLayout = ({
   children,
   removeField,
+  alignCenter = false,
 }: ListFormItemLayoutProps) => {
   return (
-    <ListFormItemRoot>
+    <ListFormItemRoot alignCenter={alignCenter}>
       {children}
       <ListFormFieldDeleteButton
         onClick={removeField}
@@ -151,11 +163,13 @@ export const ListFormItemLayout = ({
 interface ListFormFieldLayoutProps {
   children: React.ReactNode;
   insertField: () => void;
+  label: string;
 }
 
-const ListFormFieldLayout = ({
+const ListBaseFormFieldLayout = ({
   children,
   insertField,
+  label,
 }: ListFormFieldLayoutProps) => {
   const [listVisibility, setListVisibility] = React.useState<boolean>(false);
 
@@ -163,39 +177,60 @@ const ListFormFieldLayout = ({
     setListVisibility((prevState) => !prevState);
   };
 
-  return (
-    <ListFormFieldRoot>
-      <ListFormFieldHeader>
-        <ListFormFieldLabel>Label title here</ListFormFieldLabel>
+  const handleInsertField = () => {
+    if (!listVisibility) {
+      setListVisibility(true);
+    }
 
-        <ListFormFieldAddButton
-          variants={addButtonVariants}
-          initial="initial"
-          whileHover="hover"
-          whileTap="pressed"
-          onClick={insertField}
-        >
-          <SvgIcon component={Add} />
-        </ListFormFieldAddButton>
-        <ListFormFieldExpandButton
-          onClick={toggleListVisibility}
-          variants={expandButtonVariant}
-          whileHover="hover"
-          whileTap="pressed"
-          animate={listVisibility ? "expanded" : "initial"}
-        >
-          <SvgIcon component={ExpandMore} />
-        </ListFormFieldExpandButton>
-      </ListFormFieldHeader>
-      <ListFormContent
-        initial="initial"
-        variants={attributeListContainerVariants}
-        animate={listVisibility ? "expanded" : "initial"}
-      >
-        <div style={{ padding: "40px", width: "100%" }}>{children}</div>
-      </ListFormContent>
-    </ListFormFieldRoot>
+    insertField();
+  };
+
+  return (
+    <AnimateSharedLayout>
+      <motion.div layout>
+        <ListFormFieldRoot>
+          <ListFormFieldHeader>
+            <ListFormFieldLabel>{_.capitalize(label)}</ListFormFieldLabel>
+
+            <ListFormFieldAddButton
+              variants={addButtonVariants}
+              initial="initial"
+              whileHover="hover"
+              whileTap="pressed"
+              onClick={handleInsertField}
+            >
+              <SvgIcon component={Add} />
+            </ListFormFieldAddButton>
+            <ListFormFieldExpandButton
+              onClick={toggleListVisibility}
+              variants={expandButtonVariant}
+              whileHover="hover"
+              whileTap="pressed"
+              animate={listVisibility ? "expanded" : "initial"}
+            >
+              <SvgIcon component={ExpandMore} />
+            </ListFormFieldExpandButton>
+          </ListFormFieldHeader>
+          <ListFormContent
+            initial="initial"
+            variants={attributeListContainerVariants}
+            animate={listVisibility ? "expanded" : "initial"}
+          >
+            <div
+              style={{
+                padding: "40px",
+                width: "100%",
+                paddingLeft: "20px",
+                paddingRight: "20px",
+              }}
+            >
+              {children}
+            </div>
+          </ListFormContent>
+        </ListFormFieldRoot>
+      </motion.div>
+    </AnimateSharedLayout>
   );
 };
 
-export default ListFormFieldLayout;
+export default ListBaseFormFieldLayout;

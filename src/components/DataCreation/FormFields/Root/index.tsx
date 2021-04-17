@@ -1,6 +1,7 @@
 import React from "react";
 import {
   CheckboxField,
+  ListFieldOptions,
   RadioField,
 } from "../../../../config/collections.config";
 import { FormFieldDictionary } from "../../../../dictionaries";
@@ -27,6 +28,7 @@ interface RootFormFieldProps {
   selectValues?: string[];
   radioOptions?: RadioField[];
   checkboxOptions?: CheckboxField[];
+  listOptions?: ListFieldOptions | null;
 }
 
 export interface FormFieldComponentProps extends RootFormFieldProps {}
@@ -48,6 +50,7 @@ const RootFormField = ({
   selectValues = [],
   radioOptions = [],
   checkboxOptions = [],
+  listOptions,
 }: RootFormFieldProps) => {
   const FormFieldDynamic = FormFieldDictionary[formFieldType];
 
@@ -60,6 +63,7 @@ const RootFormField = ({
       onBlur={onBlur}
       id={id}
       checkboxOptions={checkboxOptions}
+      listOptions={listOptions}
       radioOptions={radioOptions}
       error={error}
       value={value}
