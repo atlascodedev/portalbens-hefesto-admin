@@ -1,6 +1,8 @@
 import React from "react";
 import { FormFieldComponentProps } from "../Root";
 import {
+  Calendar,
+  DatePicker,
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
@@ -9,6 +11,8 @@ import { ptBR } from "date-fns/locale";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import { format, isDate, isExists } from "date-fns";
 import { isValid } from "date-fns/esm";
+import { IconButton, InputAdornment } from "@material-ui/core";
+import { Alarm, CalendarToday, Event } from "@material-ui/icons";
 
 const DateFormField = ({
   formFieldType,
@@ -28,8 +32,9 @@ const DateFormField = ({
   return (
     <React.Fragment>
       <MuiPickersUtilsProvider locale={ptBR} utils={DateFnsUtils}>
-        <KeyboardDatePicker
+        <DatePicker
           clearable
+          disablePast
           helperText={helperText}
           inputVariant="outlined"
           error={Boolean(helperText)}
@@ -49,8 +54,17 @@ const DateFormField = ({
           }}
           value={value}
           placeholder={"10/10/2018"}
-          minDate={new Date()}
+          // minDate={new Date()}
           format={"dd/MM/yyyy"}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton>
+                  <Event />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
       </MuiPickersUtilsProvider>
     </React.Fragment>

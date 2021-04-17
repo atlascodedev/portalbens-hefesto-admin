@@ -148,9 +148,10 @@ const cardCollection: DashboardItem = {
 
     {
       groupID: "infoGroup",
-      fieldType: "time",
-      label: "Horário ",
-      name: "cardTime",
+      fieldType: "installment",
+      label: "Parcelas",
+      name: "cardInstallment",
+      hidden: true,
     },
   ],
 };

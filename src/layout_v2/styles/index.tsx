@@ -243,7 +243,7 @@ export const SidebarItemLayout = ({
   disabled = false,
 }: SidebarItemLayoutProps) => {
   return (
-    <Tooltip title={disabled ? "Item desabilitado" : ""}>
+    <Tooltip title={disabled ? "Opção desabilitada" : ""}>
       <AppSidebarItemRoot disabled={disabled} onClick={actionFn}>
         <SidebarItemIconContainer>
           <SvgIcon component={icon} />
