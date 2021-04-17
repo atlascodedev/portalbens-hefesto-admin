@@ -22,14 +22,6 @@ const AppLayout = ({ children, activeCollectionLabel, logoutFn }: Props) => {
       >
         {children}
       </AppLayoutRoot>
-
-      <FeedbackDialog
-        closeFn={() => console.log("no")}
-        onClose={() => console.log("just no")}
-        open={true}
-        severity={"error"}
-        callback={() => alert("you suck")}
-      />
     </React.Fragment>
   );
 };

@@ -201,9 +201,10 @@ const FeedbackDialogLayout = ({
   callback,
 }: FeedbackDialogLayoutProps) => {
   const handleCallback = () => {
-    callback!();
-
-    closeFn!();
+    if (callback && closeFn) {
+      callback();
+      closeFn();
+    }
   };
 
   return (

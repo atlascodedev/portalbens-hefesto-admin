@@ -4,7 +4,7 @@ import FeedbackDialogLayout, { FeedbackDialogLayoutProps } from "./styles";
 
 interface Props extends FeedbackDialogLayoutProps {
   open: boolean;
-  onClose: (...args: any[]) => void;
+  onClose?: (...args: any[]) => void;
   closeFn: (open: boolean) => void;
 }
 

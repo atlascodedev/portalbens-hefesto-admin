@@ -26,7 +26,7 @@ const Backdrop = styled.div<BackdropComponentProps>`
 interface UseBackdropProps {
   children: React.ReactNode;
   backdropColor?: string;
-  onClose: (...args: any[]) => void;
+  onClose?: (...args: any[]) => void;
   closeFn: (...args: any[]) => void;
   open: boolean;
 }

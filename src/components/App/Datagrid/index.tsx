@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { globalNotificationCustom } from "../../../redux/globalUI/actions";
 import { useLocation, useNavigate } from "@reach/router";
 import { DatagridColumns } from "../../DataCreation";
+import FeedbackDialog from "../../Util/FeedbackDialog";
 
 const tableIcons: any = {
   Add: forwardRef((props: any, ref: any) => <AddBox {...props} ref={ref} />),
@@ -92,12 +93,40 @@ const Datagrid = React.memo(
     columns,
     data = [],
   }: DatagridEntriesProps) => {
+    const [feedbackDialogState, setFeedbackDialogState] = React.useState<{
+      callback: (...args: any[]) => void;
+      open: boolean;
+    }>({
+      callback: () => console.log("well hello"),
+      open: false,
+    });
+
+    const handleDeleteWithDialog = (callback: (...args: any[]) => void) => {
+      setFeedbackDialogState({ open: true, callback: callback });
+    };
+
+    const toggleDeleteDialog = (open: boolean) => {
+      setFeedbackDialogState((prevState) => {
+        let currentState = prevState;
+
+        return { ...currentState, open: open };
+      });
+    };
+
     const tableRef = React.useRef<any>(null);
 
     const dispatch = useDispatch();
 
     return (
       <div>
+        <FeedbackDialog
+          closeFn={() => toggleDeleteDialog(false)}
+          open={feedbackDialogState.open}
+          severity={"success"}
+          message="Você está prestes a deletar um item, clique em confirmar se realmente deseja fazé-lo. Caso contrário, clique em cancelar"
+          title="Atenção"
+          callback={feedbackDialogState.callback}
+        />
         <MaterialTable
           // onSelectionChange={(data) => {
           //   setSelectionValues(data);
@@ -172,7 +201,9 @@ const Datagrid = React.memo(
                     )
                   );
                 } else {
-                  deleteFn(rowData[0].uuid, collectionRef);
+                  handleDeleteWithDialog(() =>
+                    deleteFn(rowData[0].uuid, collectionRef)
+                  );
                 }
               },
             }),
