@@ -38,13 +38,13 @@ const generateEntriesDataGridColumns = (
     hidden: !activeCollection[0].showID,
   });
 
-  entriesDataGridColumns.push({
-    field: "visualizeComponent",
-    title: "",
-    render: (rowData) => {
-      return <EntryViewActionButtonMain rowData={rowData} />;
-    },
-  });
+  // entriesDataGridColumns.push({
+  //   field: "visualizeComponent",
+  //   title: "",
+  //   render: (rowData) => {
+  //     return <EntryViewActionButtonMain rowData={rowData} />;
+  //   },
+  // });
 
   return entriesDataGridColumns;
 };

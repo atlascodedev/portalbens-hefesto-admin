@@ -67,17 +67,19 @@ const useFormGenerator = (): FormGenerator => {
             initialValuesInner[field.name] = "";
           }
 
-          validationSchemaInner[field.name] = Yup.array().of(
-            Yup.object({
-              installmentMonths: Yup.number()
-                .integer("É preciso ser um número")
-                .required("Este campo é obrigatório"),
+          validationSchemaInner[field.name] = Yup.array()
+            .min(1)
+            .of(
+              Yup.object({
+                installmentMonths: Yup.number()
+                  .integer("É preciso ser um número")
+                  .required("Este campo é obrigatório"),
 
-              installmentValue: Yup.string().required(
-                "Este campo é obrigatório"
-              ),
-            })
-          );
+                installmentValue: Yup.string().required(
+                  "Este campo é obrigatório"
+                ),
+              })
+            );
 
           break;
 

@@ -67,7 +67,8 @@ const EntryCreationFields = React.memo(
                             name={fieldCollection.name}
                             label={fieldCollection.label}
                             listOptions={
-                              fieldCollection.fieldType == "list"
+                              fieldCollection.fieldType == "list" ||
+                              fieldCollection.fieldType == "installment"
                                 ? fieldCollection.listOptions
                                 : null
                             }

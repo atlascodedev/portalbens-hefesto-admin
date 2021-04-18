@@ -22,6 +22,7 @@ const InstallmentsListFormField = ({
   setFieldTouched,
   setFieldValue,
   validateField,
+  listOptions,
   value,
 }: FormFieldComponentProps) => {
   const handleInsertField = () => {
@@ -42,8 +43,13 @@ const InstallmentsListFormField = ({
     setFieldValue(name, [...currentFieldArray], true);
   };
 
+  console.log(listOptions);
+
   return (
-    <ListBaseFormFieldLayout insertField={handleInsertField} label={"Parcelas"}>
+    <ListBaseFormFieldLayout
+      insertField={handleInsertField}
+      label={listOptions?.label ?? ""}
+    >
       {(value as any[]).length > 0 ? (
         (value as any[]).map((valueInner, index: number) => {
           return (

@@ -118,12 +118,7 @@ const cardCollection: DashboardItem = {
       label: "Entrada",
       name: "cardEntrada",
     },
-    {
-      groupID: "infoGroup",
-      fieldType: "string",
-      label: "Saldo",
-      name: "cardSaldo",
-    },
+
     {
       groupID: "infoGroup",
       fieldType: "boolean",
@@ -143,6 +138,7 @@ const cardCollection: DashboardItem = {
       groupID: "infoGroup",
       fieldType: "date",
       label: "Próximo vencimento da carta",
+      hidden: true,
       name: "cardExpire",
     },
 
@@ -152,6 +148,10 @@ const cardCollection: DashboardItem = {
       label: "Parcelas",
       name: "cardInstallment",
       hidden: true,
+      listOptions: {
+        fieldLabel: "Saldo",
+        label: "Saldo",
+      },
     },
   ],
 };
@@ -273,6 +273,10 @@ const partnersCollection: DashboardItem = {
       label: "Another list",
       name: "installmentList",
       groupID: "partnerInfo",
+      listOptions: {
+        fieldLabel: "Saldo",
+        label: "notused",
+      },
       hidden: true,
     },
   ],
