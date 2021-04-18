@@ -587,4 +587,11 @@ const converToSlug = (str: string) => {
     .replace(/-+$/, "");
 };
 
+export const convertToSlugRegExp = (string: string) => {
+  return string
+    .toLowerCase()
+    .replace(/[^\w ]+/g, "")
+    .replace(/ +/g, "-");
+};
+
 export default converToSlug;

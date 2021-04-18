@@ -59,6 +59,20 @@ const useFormGenerator = (): FormGenerator => {
 
     for (const field of fields!) {
       switch (field.fieldType) {
+        case "slug":
+          if (isUpdating) {
+            initialValuesInner[field.name] =
+              entrySelected.entryValues[field.name];
+          } else {
+            initialValuesInner[field.name] = "";
+          }
+
+          validationSchemaInner[field.name] = Yup.string().required(
+            "Este campo é obrigatório"
+          );
+
+          break;
+
         case "installment":
           if (isUpdating) {
             initialValuesInner[field.name] =
@@ -204,7 +218,12 @@ const useFormGenerator = (): FormGenerator => {
           );
           break;
         case "select":
-          initialValuesInner[field.name] = "";
+          if (isUpdating) {
+            initialValuesInner[field.name] =
+              entrySelected.entryValues[field.name];
+          } else {
+            initialValuesInner[field.name] = "";
+          }
           validationSchemaInner[field.name] = Yup.string().required(
             "É preciso escolher uma opção"
           );

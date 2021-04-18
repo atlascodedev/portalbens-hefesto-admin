@@ -12,7 +12,8 @@ export type FormFieldTypes =
   | "date"
   | "time"
   | "list"
-  | "installment";
+  | "installment"
+  | "slug";
 
 export type IconTypes =
   | "AttachMoney"
