@@ -23,6 +23,8 @@ import { remove } from "lodash";
 import AppInfo from "../AppInfo/Main";
 import hefestoLogo from "../../images/hefesto-logo.svg";
 import { OverridableComponent } from "@material-ui/core/OverridableComponent";
+import FeedbackDialog from "../../components/Util/FeedbackDialog";
+import useEnhancedDialog from "../../hooks/useEnhancedDialog";
 
 export const AppLayoutSidebarContainer = styled(motion.div)`
   min-width: 15%;
@@ -456,8 +458,21 @@ export const AppLayoutRoot = ({
     setNotificationsAnchorElement(null);
   };
 
+  const {
+    EnhancedDialog,
+    setCallback,
+    toggleVisibility,
+    visibility,
+  } = useEnhancedDialog("Informação", "Bilu bilau", "info");
+
+  const handleRepositoryDispatchDialog = () => {
+    setCallback(() => console.log("glug glug"));
+    toggleVisibility(true);
+  };
+
   return (
     <AppLayoutRootContainer>
+      <EnhancedDialog />
       <LayoutDrawer
         sidebarItems={sidebarItems}
         logo={logo}
@@ -488,7 +503,11 @@ export const AppLayoutRoot = ({
           }}
         >
           <div style={{ position: "absolute", bottom: "5%" }}>
-            <SidebarItemLayout icon={Autorenew} label="Atualizar website" />
+            <SidebarItemLayout
+              actionFn={handleRepositoryDispatchDialog}
+              icon={Autorenew}
+              label="Atualizar website"
+            />
             <SidebarItemLayout disabled icon={Settings} label="Configurações" />
           </div>
         </div>

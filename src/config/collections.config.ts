@@ -142,7 +142,7 @@ const cardCollection: DashboardItem = {
     {
       groupID: "infoGroup",
       fieldType: "date",
-      label: "Vencimento da carta",
+      label: "Próximo vencimento da carta",
       name: "cardExpire",
     },
 

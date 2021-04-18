@@ -190,7 +190,7 @@ export interface FeedbackDialogLayoutProps {
   title?: string;
   message?: string;
   closeFn?: (...args: any[]) => void;
-  callback?: (...args: any[]) => void;
+  callback?: ((...args: any[]) => void) | null;
 }
 
 const FeedbackDialogLayout = ({
