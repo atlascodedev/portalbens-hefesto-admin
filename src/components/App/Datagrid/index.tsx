@@ -94,7 +94,7 @@ const Datagrid = React.memo(
     data = [],
   }: DatagridEntriesProps) => {
     const [feedbackDialogState, setFeedbackDialogState] = React.useState<{
-      callback: (...args: any[]) => void;
+      callback: (...args: any[]) => void ;
       open: boolean;
     }>({
       callback: () => console.log("well hello"),

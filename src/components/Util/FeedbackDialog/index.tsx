@@ -2,10 +2,10 @@ import React from "react";
 import AtlasBackdrop from "../AtlasBackdrop";
 import FeedbackDialogLayout, { FeedbackDialogLayoutProps } from "./styles";
 
-interface Props extends FeedbackDialogLayoutProps {
+export interface FeedbackDialogProps extends FeedbackDialogLayoutProps {
   open: boolean;
   onClose?: (...args: any[]) => void;
-  closeFn: (open: boolean) => void;
+  closeFn: (...args: any[]) => void;
 }
 
 const FeedbackDialog = ({
@@ -16,7 +16,7 @@ const FeedbackDialog = ({
   message,
   severity,
   title,
-}: Props) => {
+}: FeedbackDialogProps) => {
   return (
     <AtlasBackdrop closeFn={closeFn} onClose={onClose} open={open}>
       <FeedbackDialogLayout

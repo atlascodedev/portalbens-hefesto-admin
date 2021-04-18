@@ -185,13 +185,13 @@ const FeedbackDialogButtonText = styled.div`
 
 export type FeedbackSeverity = "warning" | "success" | "error" | "info";
 
-export interface FeedbackDialogLayoutProps {
+export type FeedbackDialogLayoutProps = {
   severity?: FeedbackSeverity;
   title?: string;
   message?: string;
   closeFn?: (...args: any[]) => void;
-  callback?: ((...args: any[]) => void) | null;
-}
+  callback?: ((...args: any[]) => void) | null | void;
+};
 
 const FeedbackDialogLayout = ({
   message = "Placeholder message goes here",

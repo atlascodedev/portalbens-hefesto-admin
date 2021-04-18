@@ -1,41 +1,50 @@
 import React from "react";
 import FeedbackDialog from "../../components/Util/FeedbackDialog";
+
+import { FeedbackDialogProps } from "../../components/Util/FeedbackDialog";
 import { FeedbackSeverity } from "../../components/Util/FeedbackDialog/styles";
+
+interface EnhanceDialogComponent extends FeedbackDialogProps {}
 
 interface EnhancedDialog {
   readonly visibility: boolean;
-  toggleVisibility: (open: boolean) => void;
+  setVisibility: (open: boolean) => void;
   setCallback: (callback: (...args: any[]) => void) => void;
+  callback: ((...args: any[]) => void) | null;
   EnhancedDialog: () => JSX.Element;
 }
 
 const useEnhancedDialog = (
-  title: string,
   message: string,
+  title: string,
   severity: FeedbackSeverity
 ): EnhancedDialog => {
-  const [dialogVisibility, setDialogVisibility] = React.useState<boolean>(
-    false
-  );
+  const [feedbackDialogState, setFeedbackDialogState] = React.useState<{
+    callback: (...args: any[]) => void;
+    open: boolean;
+  }>({
+    callback: () => console.log("well hello"),
+    open: false,
+  });
 
-  const [dialogCallback, setDialogCallback] = React.useState<
-    ((...args: any[]) => void) | null
-  >(null);
+  const handleSetDialog = (callback: (...args: any[]) => void) => {
+    setFeedbackDialogState({ open: true, callback: callback });
+  };
 
   const toggleDialogVisibility = (open: boolean) => {
-    setDialogVisibility(open);
+    setFeedbackDialogState((prevState) => {
+      let currentState = prevState;
+
+      return { ...currentState, open: open };
+    });
   };
 
-  const handleDialogCallback = (callback: (...args: any[]) => void) => {
-    setDialogCallback(callback);
-  };
-
-  const EnhancedDialog = () => {
+  const EnhancedComponent = () => {
     return (
       <FeedbackDialog
         closeFn={() => toggleDialogVisibility(false)}
-        open={dialogVisibility}
-        callback={dialogCallback}
+        open={feedbackDialogState.open}
+        callback={feedbackDialogState.callback}
         message={message}
         severity={severity}
         title={title}
@@ -44,10 +53,11 @@ const useEnhancedDialog = (
   };
 
   return {
-    EnhancedDialog: EnhancedDialog,
-    setCallback: handleDialogCallback,
-    toggleVisibility: toggleDialogVisibility,
-    visibility: dialogVisibility,
+    EnhancedDialog: EnhancedComponent,
+    setCallback: handleSetDialog,
+    setVisibility: toggleDialogVisibility,
+    callback: feedbackDialogState.callback,
+    visibility: feedbackDialogState.open,
   };
 };
 

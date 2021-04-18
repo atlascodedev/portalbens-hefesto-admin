@@ -461,13 +461,13 @@ export const AppLayoutRoot = ({
   const {
     EnhancedDialog,
     setCallback,
-    toggleVisibility,
+    setVisibility,
     visibility,
-  } = useEnhancedDialog("Informação", "Bilu bilau", "info");
+  } = useEnhancedDialog("WEWEWEWEwqeWEwewe", "oK", "info");
 
   const handleRepositoryDispatchDialog = () => {
-    setCallback(() => console.log("glug glug"));
-    toggleVisibility(true);
+    setCallback(() => console.log("Teste"));
+    setVisibility(true);
   };
 
   return (
