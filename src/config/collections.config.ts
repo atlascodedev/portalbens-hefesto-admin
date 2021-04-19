@@ -177,6 +177,7 @@ const blogCollection: DashboardItem = {
       fieldType: "text",
       label: "Descrição do post",
       name: "blogDescription",
+      hidden: true,
     },
 
     {
@@ -198,6 +199,7 @@ const blogCollection: DashboardItem = {
       fieldType: "boolean",
       label: "Status do post",
       name: "blogActive",
+      hidden: true,
     },
   ],
 };
