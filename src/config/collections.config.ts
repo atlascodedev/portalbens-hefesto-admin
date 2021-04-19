@@ -171,6 +171,14 @@ const blogCollection: DashboardItem = {
       label: "Título",
       name: "blogTitle",
     },
+
+    {
+      groupID: "blogInfo",
+      fieldType: "text",
+      label: "Descrição do post",
+      name: "blogDescription",
+    },
+
     {
       groupID: "blogInfo",
       fieldType: "image",
