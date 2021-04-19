@@ -170,7 +170,7 @@ const blogCollection: DashboardItem = {
       fieldType: "string",
       label: "Título",
       name: "blogTitle",
-      slug: true
+      slug: true,
     },
 
     {

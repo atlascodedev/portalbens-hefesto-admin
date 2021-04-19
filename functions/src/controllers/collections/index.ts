@@ -65,8 +65,8 @@ type GetEntryWhereRequestParams = {
 type GetEntryWhereQueryStrings = {};
 
 type GetEntryWhereBody = {
-  fieldName: string;
-  fieldValue: string;
+  key: string;
+  value: string;
 };
 
 export const getEntryWhere = async (
@@ -80,17 +80,16 @@ export const getEntryWhere = async (
 ) => {
   const collectionRef: string = req.params.collectionRef;
 
-  if (!req.body.fieldName || !req.body.fieldValue) {
+  if (!req.body.key || !req.body.value) {
     return res.status(400).json({
-      message:
-        "Invalid request format. You must provide a fieldName and a fieldValue",
+      message: "Invalid request format. You must provide a key and a value",
     });
   }
 
   db.collection("collections")
     .doc(collectionRef)
     .collection("entries")
-    .where(req.body.fieldName, "==", req.body.fieldValue)
+    .where(req.body.key, "==", req.body.value)
     .get()
     .then((entrySnapshopt) => {
       let entryDataInternal: any;
