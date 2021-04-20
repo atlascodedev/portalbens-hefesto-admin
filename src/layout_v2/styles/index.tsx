@@ -25,6 +25,7 @@ import hefestoLogo from "../../images/hefesto-logo.svg";
 import { OverridableComponent } from "@material-ui/core/OverridableComponent";
 import FeedbackDialog from "../../components/Util/FeedbackDialog";
 import useEnhancedDialog from "../../hooks/useEnhancedDialog";
+import axios from "axios";
 
 export const AppLayoutSidebarContainer = styled(motion.div)`
   min-width: 15%;
@@ -469,8 +470,14 @@ export const AppLayoutRoot = ({
     "info"
   );
 
+  const handleForge = () => {
+    axios.post(
+      "https://us-central1-portalbens-nextjs-hefesto.cloudfunctions.net/api/build/forge"
+    );
+  };
+
   const handleRepositoryDispatchDialog = () => {
-    setCallback(() => console.log("Teste"));
+    setCallback(() => handleForge());
     setVisibility(true);
   };
 

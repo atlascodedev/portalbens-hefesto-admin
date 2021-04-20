@@ -22,7 +22,6 @@ export const staticGithubActionBuild = async (
   req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>,
   res: Response
 ) => {
-  let eventType: string = req.body.event_type;
   let responseMessage: string;
 
   Axios.post(

@@ -7,6 +7,6 @@ const staticBuildRouter: Router = express.Router();
 
 staticBuildRouter.options("*", cors());
 
-staticBuildRouter.get("/forge", cors(), staticGithubActionBuild);
+staticBuildRouter.post("/forge", cors(), staticGithubActionBuild);
 
 export default staticBuildRouter;
