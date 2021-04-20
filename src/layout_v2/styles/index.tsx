@@ -26,6 +26,12 @@ import { OverridableComponent } from "@material-ui/core/OverridableComponent";
 import FeedbackDialog from "../../components/Util/FeedbackDialog";
 import useEnhancedDialog from "../../hooks/useEnhancedDialog";
 import axios from "axios";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import {
+  globalNotificationCustom,
+  setLoadingFalse,
+  setLoadingTrue,
+} from "../../redux/globalUI/actions";
 
 export const AppLayoutSidebarContainer = styled(motion.div)`
   min-width: 15%;
@@ -470,10 +476,24 @@ export const AppLayoutRoot = ({
     "info"
   );
 
+  const dispatch = useAppDispatch();
+
   const handleForge = () => {
-    axios.post(
-      "https://us-central1-portalbens-nextjs-hefesto.cloudfunctions.net/api/build/forge"
-    );
+    dispatch(setLoadingTrue());
+
+    axios
+      .post(
+        "https://us-central1-portalbens-nextjs-hefesto.cloudfunctions.net/api/build/forge"
+      )
+      .then(() => {
+        dispatch(setLoadingFalse());
+        dispatch(
+          globalNotificationCustom(
+            "Processo de sincronização iniciado com sucesso!",
+            "success"
+          )
+        );
+      });
   };
 
   const handleRepositoryDispatchDialog = () => {
