@@ -206,9 +206,14 @@ const useFormGenerator = (): FormGenerator => {
                 entrySelected.entryValues[field.name])
             : (initialValuesInner[field.name] = "");
 
-          validationSchemaInner[field.name] = Yup.string().required(
-            "Este campo é obrigatório"
-          );
+          if (!field.required) {
+            validationSchemaInner[field.name] = Yup.string().notRequired();
+          } else {
+            validationSchemaInner[field.name] = Yup.string().required(
+              "Este campo é obrigatório"
+            );
+          }
+
           break;
         case "phone":
           if (isUpdating) {

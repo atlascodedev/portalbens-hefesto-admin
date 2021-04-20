@@ -11,6 +11,8 @@ node_modules/
 firebaseEnv.json
 lib
 
+.runtimeconfig.json
+
 # LOG FILES
 
 *.log

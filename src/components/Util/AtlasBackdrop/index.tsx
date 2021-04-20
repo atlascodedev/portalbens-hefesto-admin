@@ -58,7 +58,7 @@ const AtlasBackdrop = ({
       timeout={{ enter: 750, exit: 400 }}
       mountOnEnter
       unmountOnExit
-      exit
+      exit={true}
     >
       <Backdrop
         backdround={backdropColor}

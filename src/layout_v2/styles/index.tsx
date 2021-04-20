@@ -7,6 +7,7 @@ import { IconTypes } from "../../dictionaries/types";
 import { Fade, SvgIcon, SvgIconTypeMap, Tooltip } from "@material-ui/core";
 import {
   Autorenew,
+  BugReport,
   Help,
   MenuRounded,
   Notifications,
@@ -540,6 +541,12 @@ export const AppLayoutRoot = ({
               label="Atualizar website"
             />
             <SidebarItemLayout disabled icon={Settings} label="Configurações" />
+
+            <SidebarItemLayout
+              disabled
+              icon={BugReport}
+              label="Reportar um bug"
+            />
           </div>
         </div>
       </AppLayoutSidebarContainer>

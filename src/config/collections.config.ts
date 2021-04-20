@@ -91,8 +91,19 @@ const cardCollection: DashboardItem = {
   fieldGroups: [
     { id: "adminGroup", label: "Administradora" },
     { id: "infoGroup", label: "Informações" },
+    { id: "privateGroup", label: "Campos privados" },
   ],
   fields: [
+    {
+      groupID: "privateGroup",
+      fieldType: "text",
+      hidden: true,
+      label: "Anotações sobre a carta",
+      name: "cardNotes",
+      private: true,
+      required: false,
+    },
+
     {
       groupID: "adminGroup",
       fieldType: "string",
