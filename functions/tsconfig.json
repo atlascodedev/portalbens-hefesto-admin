@@ -9,8 +9,7 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2017",
-    "esModuleInterop": true,
-    // "watch": true
+    "esModuleInterop": true
   },
   "include": ["src"]
 }

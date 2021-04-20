@@ -94,7 +94,7 @@ const Datagrid = React.memo(
     data = [],
   }: DatagridEntriesProps) => {
     const [feedbackDialogState, setFeedbackDialogState] = React.useState<{
-      callback: (...args: any[]) => void ;
+      callback: (...args: any[]) => void;
       open: boolean;
     }>({
       callback: () => console.log("well hello"),
@@ -122,7 +122,7 @@ const Datagrid = React.memo(
         <FeedbackDialog
           closeFn={() => toggleDeleteDialog(false)}
           open={feedbackDialogState.open}
-          severity={"success"}
+          severity={"error"}
           message="Você está prestes a deletar um item, clique em confirmar se realmente deseja fazé-lo. Caso contrário, clique em cancelar"
           title="Atenção"
           callback={feedbackDialogState.callback}

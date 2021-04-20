@@ -38,6 +38,13 @@ runTerminalCommand({
 }, { bg_color_hex: "#2B2E3B", color_hex: "#9FEAF9" }, "React scripts");
 runTerminalCommand({
     command: "tsc",
-    args: [],
+    args: ["--watch"],
     options: { cwd: path_1.resolve(process.cwd(), "functions"), shell: true }
 }, { bg_color_hex: "#007ACC", color_hex: "#FFFFFF" }, "Typescript cloud functions compilation");
+// const process = spawn(...); // long running process
+// // ... later...
+//         if (os.platform() === 'win32') { // process.platform was undefined for me, but this works
+//           execSync(`taskkill /F /T /PID ${process.pid}`); // windows specific
+//         } else {
+//           process.kill();
+//         }

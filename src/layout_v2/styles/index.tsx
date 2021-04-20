@@ -463,7 +463,11 @@ export const AppLayoutRoot = ({
     setCallback,
     setVisibility,
     visibility,
-  } = useEnhancedDialog("WEWEWEWEwqeWEwewe", "oK", "info");
+  } = useEnhancedDialog(
+    "Esta ação irá sincronizar os dados presentes em seu banco de dados com sua aplicação/website. Esta ação leva em média 2-3 minutos.",
+    "Sincronização de dados",
+    "info"
+  );
 
   const handleRepositoryDispatchDialog = () => {
     setCallback(() => console.log("Teste"));

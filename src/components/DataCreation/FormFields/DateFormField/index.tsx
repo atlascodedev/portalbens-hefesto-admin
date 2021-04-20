@@ -50,11 +50,12 @@ const DateFormField = ({
               setFieldTouched(name, true, true);
             }
 
-            setFieldValue(name, date, true);
+            setFieldValue(name, date?.toJSON(), true);
           }}
           value={value}
-          placeholder={"10/10/2018"}
+          // placeholder={"10/10/2018"}
           // minDate={new Date()}
+
           format={"dd/MM/yyyy"}
           InputProps={{
             endAdornment: (

@@ -13,7 +13,7 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{secrets.GITHUB_TOKEN}}"
-          firebaseServiceAccount: "${{secrets.FIREBASE_SERVICE_ACCOUNT}}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PORTALBENS_NEXTJS_HEFESTO }}"
           projectId: portalbens-nextjs-hefesto
           channelId: live
         env:

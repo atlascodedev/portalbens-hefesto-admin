@@ -122,7 +122,12 @@ const useFormGenerator = (): FormGenerator => {
           break;
 
         case "date":
-          initialValuesInner[field.name] = "";
+          if (isUpdating) {
+            initialValuesInner[field.name] =
+              entrySelected.entryValues[field.name];
+          } else {
+            initialValuesInner[field.name] = null;
+          }
 
           validationSchemaInner[field.name] = Yup.string()
             .required("É necessário definir uma data")
