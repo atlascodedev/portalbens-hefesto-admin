@@ -33,7 +33,6 @@ const useFormGenerator = (): FormGenerator => {
     validationSchema: Yup.object(validationSchema),
     onSubmit: (value, actions) => console.log("You submitted"),
     enableReinitialize: true,
-
     validateOnMount: true,
   });
 
@@ -78,7 +77,7 @@ const useFormGenerator = (): FormGenerator => {
             initialValuesInner[field.name] =
               entrySelected.entryValues[field.name];
           } else {
-            initialValuesInner[field.name] = "";
+            initialValuesInner[field.name] = [];
           }
 
           validationSchemaInner[field.name] = Yup.array()
@@ -206,13 +205,9 @@ const useFormGenerator = (): FormGenerator => {
                 entrySelected.entryValues[field.name])
             : (initialValuesInner[field.name] = "");
 
-          if (!field.required) {
-            validationSchemaInner[field.name] = Yup.string().notRequired();
-          } else {
-            validationSchemaInner[field.name] = Yup.string().required(
-              "Este campo é obrigatório"
-            );
-          }
+          validationSchemaInner[field.name] = Yup.string().required(
+            "Este campo é obrigatório"
+          );
 
           break;
         case "phone":
@@ -259,6 +254,7 @@ const useFormGenerator = (): FormGenerator => {
 
         default:
           initialValuesInner[field.name] = "";
+
           validationSchemaInner[field.name] = Yup.string().notRequired();
       }
     }
