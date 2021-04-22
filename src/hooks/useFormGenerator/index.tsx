@@ -205,9 +205,17 @@ const useFormGenerator = (): FormGenerator => {
                 entrySelected.entryValues[field.name])
             : (initialValuesInner[field.name] = "");
 
-          validationSchemaInner[field.name] = Yup.string().required(
-            "Este campo é obrigatório"
-          );
+          if ("required" in field && field.required) {
+            validationSchemaInner[field.name] = Yup.string().required(
+              "Este campo é obrigatório"
+            );
+          } else if ("required" in field && !field.required) {
+            validationSchemaInner[field.name] = Yup.string().notRequired();
+          } else {
+            validationSchemaInner[field.name] = Yup.string().required(
+              "Este campo é obrigatório"
+            );
+          }
 
           break;
         case "phone":
@@ -254,8 +262,6 @@ const useFormGenerator = (): FormGenerator => {
 
         default:
           initialValuesInner[field.name] = "";
-
-          validationSchemaInner[field.name] = Yup.string().notRequired();
       }
     }
 
