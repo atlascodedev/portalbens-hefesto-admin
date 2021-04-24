@@ -24,7 +24,8 @@ const PriceFormField = ({
     <TextFieldWrapper>
       <NumberFormat
         variant="outlined"
-        thousandSeparator={","}
+        thousandSeparator={"."}
+        decimalSeparator={","}
         value={value}
         decimalScale={2}
         allowNegative={false}
