@@ -5,7 +5,6 @@ import logo from "../../images/logo.svg";
 import { RootState } from "../../redux";
 import { connect, ConnectedProps } from "react-redux";
 import { logoutUser } from "../../redux/authentication/actions";
-import FeedbackDialog from "../../components/Util/FeedbackDialog";
 
 interface Props extends AppLayoutReduxProps {
   children: React.ReactNode;

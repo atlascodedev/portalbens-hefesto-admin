@@ -34,6 +34,7 @@ import {
   setLoadingFalse,
   setLoadingTrue,
 } from "../../redux/globalUI/actions";
+import { checkCardsExpiring } from "../../redux/special/cards/actions";
 
 export const AppLayoutSidebarContainer = styled(motion.div)`
   min-width: 15%;
@@ -529,7 +530,7 @@ export const AppLayoutRoot = ({
         >
           <div style={{ position: "absolute", bottom: "5%" }}>
             <SidebarItemLayout
-              actionFn={() => console.log("i do nothing for now")}
+              actionFn={() => dispatch(checkCardsExpiring() as any)}
               icon={Update}
               label="Checar cartas vencidas"
             />

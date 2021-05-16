@@ -1,18 +1,12 @@
 import React from "react";
 import { FormFieldComponentProps } from "../Root";
-import {
-  Calendar,
-  DatePicker,
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { ptBR } from "date-fns/locale";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
-import { format, isDate, isExists } from "date-fns";
-import { isValid } from "date-fns/esm";
 import { IconButton, InputAdornment } from "@material-ui/core";
-import { Alarm, CalendarToday, Event } from "@material-ui/icons";
+import { Event } from "@material-ui/icons";
+import { isValid } from "date-fns";
 
 const DateFormField = ({
   formFieldType,
@@ -34,7 +28,7 @@ const DateFormField = ({
       <MuiPickersUtilsProvider locale={ptBR} utils={DateFnsUtils}>
         <DatePicker
           clearable
-          disablePast
+          disablePast={false}
           helperText={helperText}
           inputVariant="outlined"
           error={Boolean(helperText)}
