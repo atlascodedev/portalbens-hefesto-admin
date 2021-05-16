@@ -54,7 +54,7 @@ export const activeCollectionReducer = (
       for (const row in action.payload) {
         const rowValue = action.payload[row];
 
-        if (row == "uuid") {
+        if (row === "uuid") {
           entryUUIDInternal = rowValue;
         } else if (row !== "tableData") {
           entryValuesInternal[row] = rowValue;

@@ -13,6 +13,7 @@ import {
   Notifications,
   Person,
   Settings,
+  Update,
 } from "@material-ui/icons";
 import LayoutDrawer from "../Drawer";
 import getCurrentPath from "../../helper/currentPath";
@@ -391,9 +392,8 @@ export const AppSidebarItem = ({
   label,
   currentPath,
 }: AppsidebarItemProps) => {
-  const [currentPathActive, setCurrentPathActive] = React.useState<boolean>(
-    false
-  );
+  const [currentPathActive, setCurrentPathActive] =
+    React.useState<boolean>(false);
 
   const path = getCurrentPath();
 
@@ -436,13 +436,10 @@ export const AppLayoutRoot = ({
   logoutFn,
 }: AppLayoutRootProps) => {
   const [drawerState, setDrawerState] = React.useState<boolean>(false);
-  const [profileDialogState, setProfileDialogState] = React.useState<boolean>(
-    false
-  );
-  const [
-    notificationsAnchorElement,
-    setNotificationsAnchorElement,
-  ] = React.useState<HTMLElement | null>(null);
+  const [profileDialogState, setProfileDialogState] =
+    React.useState<boolean>(false);
+  const [notificationsAnchorElement, setNotificationsAnchorElement] =
+    React.useState<HTMLElement | null>(null);
 
   const [appInfoState, setAppInfoState] = React.useState<boolean>(false);
 
@@ -466,16 +463,12 @@ export const AppLayoutRoot = ({
     setNotificationsAnchorElement(null);
   };
 
-  const {
-    EnhancedDialog,
-    setCallback,
-    setVisibility,
-    visibility,
-  } = useEnhancedDialog(
-    "Esta ação irá sincronizar os dados presentes em seu banco de dados com sua aplicação/website. Esta ação leva em média 2-3 minutos.",
-    "Sincronização de dados",
-    "info"
-  );
+  const { EnhancedDialog, setCallback, setVisibility, visibility } =
+    useEnhancedDialog(
+      "Esta ação irá sincronizar os dados presentes em seu banco de dados com sua aplicação/website. Esta ação leva em média 2-3 minutos.",
+      "Sincronização de dados",
+      "info"
+    );
 
   const dispatch = useAppDispatch();
 
@@ -535,6 +528,12 @@ export const AppLayoutRoot = ({
           }}
         >
           <div style={{ position: "absolute", bottom: "5%" }}>
+            <SidebarItemLayout
+              actionFn={() => console.log("i do nothing for now")}
+              icon={Update}
+              label="Checar cartas vencidas"
+            />
+
             <SidebarItemLayout
               actionFn={handleRepositoryDispatchDialog}
               icon={Autorenew}

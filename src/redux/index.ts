@@ -8,6 +8,7 @@ import { adonisReducer } from "./adonis/reducer";
 import { colorPickerReducer } from "./colorPicker/reducer";
 import { attributeDraftReducer } from "./attributeDraft/reducer";
 import { categoryDraftReducer } from "./categoryDraft/reducer";
+import { cardCollectionReducer } from "./special/cards/reducer";
 
 const rootReducer = combineReducers({
   auth: authenticationReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   colorPicker: colorPickerReducer,
   attributeDraft: attributeDraftReducer,
   categoryDraft: categoryDraftReducer,
+  cardUpdate: cardCollectionReducer,
 });
 
 const store = createStore(
