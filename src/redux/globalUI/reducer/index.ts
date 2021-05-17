@@ -59,6 +59,12 @@ import {
   CATEGORY_DRAFT_UPDATE_START,
   CATEGORY_DRAFT_UPDATE_SUCCESS,
 } from "../../categoryDraft/types";
+import {
+  CardCollectionActionTypes,
+  CARD_COLLECTION_CHECK_FAIL,
+  CARD_COLLECTION_CHECK_START,
+  CARD_COLLECTION_CHECK_SUCCESS,
+} from "../../special/cards/types";
 
 import {
   GlobalStateActionTypes,
@@ -90,8 +96,37 @@ export const globalUIReducer = (
     | ActiveCollectionEntryDeleteActionTypes
     | ActiveCollectionEntryUpdateActionTypes
     | AuthenticationActionTypes
+    | CardCollectionActionTypes
 ): GlobalUIState => {
   switch (action.type) {
+    case CARD_COLLECTION_CHECK_START:
+      return {
+        ...state,
+        isLoading: true,
+        notificationMessage:
+          "Checagem de cartas foi iniciada, por favor, aguarde.",
+        notificationOpen: true,
+        notificationSeverity: "info",
+      };
+
+    case CARD_COLLECTION_CHECK_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        notificationMessage:
+          "Checagem de cartas finalizada com sucesso. Os resultados aparecerão em sua tela.",
+        notificationOpen: true,
+        notificationSeverity: "success",
+      };
+
+    case CARD_COLLECTION_CHECK_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        notificationMessage: action.payload.error,
+        notificationSeverity: "error",
+      };
+
     case ACTIVE_COLLECTION_ENTRY_UPDATE_START:
       return { ...state, isLoading: true };
 
