@@ -5,6 +5,7 @@ import { RootState } from "../../..";
 import { db } from "../../../../firebase";
 import {
   CardCollectionCheckActionTypes,
+  CardCollectionItem,
   CARD_COLLECTION_CHECK_FAIL,
   CARD_COLLECTION_CHECK_START,
   CARD_COLLECTION_CHECK_SUCCESS,
@@ -29,15 +30,32 @@ export const checkCardsExpiring = (): ThunkAction<
       .collection("entries")
       .get()
       .then((cardSnapshot) => {
-        let cardDocs: any[] = [];
+        let allCards: CardCollectionItem[] = [];
+        let expiredCards: CardCollectionItem[] = [];
+        let unexpiredCards: CardCollectionItem[] = [];
 
         cardSnapshot.forEach((cardDoc) => {
-          cardDocs.push(cardDoc.data());
+          allCards.push(cardDoc.data() as CardCollectionItem);
+        });
+
+        allCards.forEach((card, index: number) => {
+          let todayDate = Date.now();
+          let cardExpiration = Date.parse(card.cardExpire);
+
+          if (todayDate > cardExpiration) {
+            expiredCards.push(card);
+          } else {
+            unexpiredCards.push(card);
+          }
         });
 
         dispatch({
           type: CARD_COLLECTION_CHECK_SUCCESS,
-          payload: [...cardDocs],
+          payload: {
+            allCards: [...allCards],
+            expiredCards: [...expiredCards],
+            unexpiredCards: [...unexpiredCards],
+          },
         });
       })
       .catch((error) => {

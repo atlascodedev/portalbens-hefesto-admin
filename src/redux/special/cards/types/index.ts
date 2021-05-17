@@ -2,6 +2,21 @@ export const CARD_COLLECTION_UPDATE_START = "CARD_COLLECTION_UPDATE_START";
 export const CARD_COLLECTION_UPDATE_SUCCESS = "CARD_COLLECTION_UPDATE_SUCCESS";
 export const CARD_COLLECTION_UPDATE_FAIL = "CARD_COLLECTION_UPDATE_FAIL";
 
+export interface CardCollectionItem {
+  cardNotes?: string;
+  administradora: string;
+  cardType: "Imóvel" | "Automóvel";
+  cardValor: string;
+  cardEntrada: string;
+  cardDestaque: boolean;
+  cardSituation: boolean;
+  cardExpire: string;
+  cardInstallment: Array<{
+    installmentMonths: string;
+    installmentValue: number;
+  }>;
+}
+
 interface CardCollectionUpdateStart {
   type: typeof CARD_COLLECTION_UPDATE_START;
 }
@@ -29,7 +44,11 @@ interface CardCollectionCheckStart {
 
 interface CardCollectionCheckSucess {
   type: typeof CARD_COLLECTION_CHECK_SUCCESS;
-  payload: any;
+  payload: {
+    allCards: CardCollectionItem[];
+    expiredCards: CardCollectionItem[];
+    unexpiredCards: CardCollectionItem[];
+  };
 }
 
 interface CardCollectionCheckFail {
