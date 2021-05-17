@@ -3,6 +3,7 @@ export const CARD_COLLECTION_UPDATE_SUCCESS = "CARD_COLLECTION_UPDATE_SUCCESS";
 export const CARD_COLLECTION_UPDATE_FAIL = "CARD_COLLECTION_UPDATE_FAIL";
 
 export interface CardCollectionItem {
+  uuid: string;
   cardNotes?: string;
   administradora: string;
   cardType: "Imóvel" | "Automóvel";
@@ -23,6 +24,9 @@ interface CardCollectionUpdateStart {
 
 interface CardCollectionUpdateSuccess {
   type: typeof CARD_COLLECTION_UPDATE_SUCCESS;
+  payload?: {
+    message: string;
+  };
 }
 
 interface CardCollectionUpdateFail {
@@ -64,9 +68,9 @@ export type CardCollectionCheckActionTypes =
   | CardCollectionCheckFail;
 
 export interface CardCollectionState {
-  cards: any;
-  cardsExpired: any;
-  cardsUnexpired: any;
+  cards: CardCollectionItem[];
+  cardsExpired: CardCollectionItem[];
+  cardsUnexpired: CardCollectionItem[];
   searching: boolean;
 }
 

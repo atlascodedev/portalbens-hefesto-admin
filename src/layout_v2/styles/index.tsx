@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { DashboardItem } from "../../config/collections.config";
 import IconComponent from "../../components/Util/IconComponent";
 import { IconTypes } from "../../dictionaries/types";
@@ -21,11 +21,9 @@ import { Link } from "@reach/router";
 import { basePath, dashboardPath } from "../../config/routes.config";
 import UserProfile from "../Profile";
 import NotificationList from "../NotificationList";
-import { remove } from "lodash";
 import AppInfo from "../AppInfo/Main";
 import hefestoLogo from "../../images/hefesto-logo.svg";
 import { OverridableComponent } from "@material-ui/core/OverridableComponent";
-import FeedbackDialog from "../../components/Util/FeedbackDialog";
 import useEnhancedDialog from "../../hooks/useEnhancedDialog";
 import axios from "axios";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
@@ -34,7 +32,8 @@ import {
   setLoadingFalse,
   setLoadingTrue,
 } from "../../redux/globalUI/actions";
-import { checkCardsExpiring } from "../../redux/special/cards/actions";
+import { checkAndUpdateExpiredCards } from "../../redux/special/cards/actions";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 export const AppLayoutSidebarContainer = styled(motion.div)`
   min-width: 15%;
@@ -464,12 +463,11 @@ export const AppLayoutRoot = ({
     setNotificationsAnchorElement(null);
   };
 
-  const { EnhancedDialog, setCallback, setVisibility, visibility } =
-    useEnhancedDialog(
-      "Esta ação irá sincronizar os dados presentes em seu banco de dados com sua aplicação/website. Esta ação leva em média 2-3 minutos.",
-      "Sincronização de dados",
-      "info"
-    );
+  const { EnhancedDialog, setCallback, setVisibility } = useEnhancedDialog(
+    "Esta ação irá sincronizar os dados presentes em seu banco de dados com sua aplicação/website. Esta ação leva em média 2-3 minutos.",
+    "Sincronização de dados",
+    "info"
+  );
 
   const dispatch = useAppDispatch();
 
@@ -530,7 +528,7 @@ export const AppLayoutRoot = ({
         >
           <div style={{ position: "absolute", bottom: "5%" }}>
             <SidebarItemLayout
-              actionFn={() => dispatch(checkCardsExpiring() as any)}
+              actionFn={() => dispatch(checkAndUpdateExpiredCards() as any)}
               icon={Update}
               label="Checar cartas vencidas"
             />

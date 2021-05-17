@@ -1,3 +1,4 @@
+import { add } from "date-fns";
 import { Dispatch } from "react";
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
@@ -6,23 +7,29 @@ import { db } from "../../../../firebase";
 import {
   CardCollectionCheckActionTypes,
   CardCollectionItem,
+  CardCollectionUpdateActionTypes,
   CARD_COLLECTION_CHECK_FAIL,
   CARD_COLLECTION_CHECK_START,
   CARD_COLLECTION_CHECK_SUCCESS,
+  CARD_COLLECTION_UPDATE_FAIL,
+  CARD_COLLECTION_UPDATE_START,
+  CARD_COLLECTION_UPDATE_SUCCESS,
 } from "../types";
 
-export const checkCardsExpiring = (): ThunkAction<
+export const checkAndUpdateExpiredCards = (): ThunkAction<
   void,
   RootState,
   unknown,
   Action<string>
 > => {
   return async (
-    dispatch: Dispatch<CardCollectionCheckActionTypes>,
+    dispatch: Dispatch<
+      CardCollectionCheckActionTypes | CardCollectionUpdateActionTypes
+    >,
     getState: () => RootState
   ) => {
     dispatch({
-      type: CARD_COLLECTION_CHECK_START,
+      type: CARD_COLLECTION_UPDATE_START,
     });
 
     db.collection("collections")
@@ -49,24 +56,76 @@ export const checkCardsExpiring = (): ThunkAction<
           }
         });
 
-        dispatch({
-          type: CARD_COLLECTION_CHECK_SUCCESS,
-          payload: {
-            allCards: [...allCards],
-            expiredCards: [...expiredCards],
-            unexpiredCards: [...unexpiredCards],
-          },
+        if (expiredCards.length <= 0) {
+          dispatch({
+            type: CARD_COLLECTION_UPDATE_SUCCESS,
+            payload: {
+              message:
+                "A checagem foi concluída com sucesso, porém nenhuma carta encontra-se vencida",
+            },
+          });
+          return;
+        }
+        expiredCards.forEach((cardExpired, index) => {
+          db.collection("collections")
+            .doc("cartas")
+            .collection("entries")
+            .where("uuid", "==", cardExpired.uuid)
+            .get()
+            .then((expiredCardSnapshot) => {
+              expiredCardSnapshot.forEach((cardExpiredDoc) => {
+                let currentCard: CardCollectionItem = {
+                  ...(cardExpiredDoc.data() as CardCollectionItem),
+                };
+
+                let updateCard: CardCollectionItem = {
+                  ...currentCard,
+                  cardExpire: add(Date.parse(currentCard.cardExpire), {
+                    months: 1,
+                  }).toJSON(),
+                  cardInstallment: [...currentCard.cardInstallment],
+                  cardEntrada: (
+                    parseInt(currentCard.cardEntrada) +
+                    currentCard.cardInstallment[0].installmentValue
+                  ).toString(),
+                };
+
+                let updatedInstallment =
+                  parseInt(currentCard.cardInstallment[0].installmentMonths) -
+                  1;
+
+                if (updatedInstallment <= 0) {
+                  updateCard.cardInstallment.shift();
+                } else {
+                  updateCard.cardInstallment[0].installmentMonths =
+                    updatedInstallment.toString();
+                }
+                cardExpiredDoc.ref
+                  .update(updateCard)
+                  .then(() => {
+                    dispatch({
+                      type: CARD_COLLECTION_UPDATE_SUCCESS,
+                    });
+                  })
+                  .catch((error) => {
+                    dispatch({
+                      type: CARD_COLLECTION_UPDATE_FAIL,
+                    });
+                  })
+                  .catch((error) => {
+                    dispatch({
+                      type: CARD_COLLECTION_UPDATE_FAIL,
+                    });
+                  });
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+              dispatch({
+                type: CARD_COLLECTION_UPDATE_FAIL,
+              });
+            });
         });
-      })
-      .catch((error) => {
-        dispatch({
-          type: CARD_COLLECTION_CHECK_FAIL,
-          payload: {
-            error:
-              "Ocorreu um erro durante o processo de verificação de cartas vencidas, atualize a página e tente novamente e se o erro persistir, contate o desenvolvedor responsável.",
-          },
-        });
-        console.log(error);
       });
   };
 };

@@ -61,9 +61,13 @@ import {
 } from "../../categoryDraft/types";
 import {
   CardCollectionActionTypes,
+  CardCollectionUpdateActionTypes,
   CARD_COLLECTION_CHECK_FAIL,
   CARD_COLLECTION_CHECK_START,
   CARD_COLLECTION_CHECK_SUCCESS,
+  CARD_COLLECTION_UPDATE_FAIL,
+  CARD_COLLECTION_UPDATE_START,
+  CARD_COLLECTION_UPDATE_SUCCESS,
 } from "../../special/cards/types";
 
 import {
@@ -96,35 +100,31 @@ export const globalUIReducer = (
     | ActiveCollectionEntryDeleteActionTypes
     | ActiveCollectionEntryUpdateActionTypes
     | AuthenticationActionTypes
-    | CardCollectionActionTypes
+    | CardCollectionUpdateActionTypes
 ): GlobalUIState => {
   switch (action.type) {
-    case CARD_COLLECTION_CHECK_START:
-      return {
-        ...state,
-        isLoading: true,
-        notificationMessage:
-          "Checagem de cartas foi iniciada, por favor, aguarde.",
-        notificationOpen: true,
-        notificationSeverity: "info",
-      };
+    case CARD_COLLECTION_UPDATE_START:
+      return { ...state, isLoading: true };
 
-    case CARD_COLLECTION_CHECK_SUCCESS:
+    case CARD_COLLECTION_UPDATE_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        notificationMessage:
-          "Checagem de cartas finalizada com sucesso. Os resultados aparecerão em sua tela.",
-        notificationOpen: true,
+        notificationMessage: action.payload
+          ? action.payload.message
+          : "A checagem de cartas vencidas foi realizada com sucesso!",
         notificationSeverity: "success",
+        notificationOpen: true,
       };
 
-    case CARD_COLLECTION_CHECK_FAIL:
+    case CARD_COLLECTION_UPDATE_FAIL:
       return {
         ...state,
         isLoading: false,
-        notificationMessage: action.payload.error,
+        notificationMessage:
+          "Houve um erro ao tentar realizar a checagem de cartas vencidas, recarregue a página e tente novamente ou contate seu desenvolvedor responsável",
         notificationSeverity: "error",
+        notificationOpen: true,
       };
 
     case ACTIVE_COLLECTION_ENTRY_UPDATE_START:

@@ -22,7 +22,13 @@ export const cardCollectionReducer = (
       return { ...state, searching: true };
 
     case CARD_COLLECTION_CHECK_SUCCESS:
-      return { ...state, searching: false, cards: action.payload };
+      return {
+        ...state,
+        searching: false,
+        cards: action.payload.allCards,
+        cardsExpired: action.payload.expiredCards,
+        cardsUnexpired: action.payload.unexpiredCards,
+      };
 
     case CARD_COLLECTION_CHECK_FAIL:
       return { ...state, searching: false };
