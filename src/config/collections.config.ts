@@ -305,19 +305,19 @@ const messageCollection: DashboardItem = {
       groupID: "infoGroup",
       fieldType: "string",
       label: "Nome",
-      name: "messageName",
+      name: "name",
     },
     {
       groupID: "infoGroup",
       fieldType: "string",
       label: "Email",
-      name: "messageEmail",
+      name: "email",
     },
     {
       groupID: "infoGroup",
       fieldType: "string",
       label: "Mensagem",
-      name: "messageText",
+      name: "message",
     },
   ],
 };

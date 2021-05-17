@@ -1,0 +1,7 @@
+POST http://localhost:5001/portalbens-nextjs-hefesto/us-central1/api/messaging/contactform
+Content-Type: application/json
+
+{   "name": "Alex",
+    "email": "test@teste.com",
+    "message": "alo alo"
+}
