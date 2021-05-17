@@ -336,6 +336,7 @@ export const setupActiveCollection = (
       entries: [],
       categories: [],
       fields: activeCollection.fields,
+      noEdit: activeCollection.noEdit ? activeCollection.noEdit : false,
       showID: activeCollection.showID ? activeCollection.showID : false,
       hasAttributes: activeCollection.hasAttributes
         ? activeCollection.hasAttributes
@@ -377,17 +378,19 @@ export const setupActiveCollection = (
   };
 };
 
-export const entryViewShow = (): ActiveCollectionEntryViewVisibilityActionTypes => {
-  return {
-    type: ACTIVE_COLLECTION_ENTRY_VIEW_VISIBILITY_SHOW,
+export const entryViewShow =
+  (): ActiveCollectionEntryViewVisibilityActionTypes => {
+    return {
+      type: ACTIVE_COLLECTION_ENTRY_VIEW_VISIBILITY_SHOW,
+    };
   };
-};
 
-export const entryViewHide = (): ActiveCollectionEntryViewVisibilityActionTypes => {
-  return {
-    type: ACTIVE_COLLECTION_ENTRY_VIEW_VISIBILITY_HIDDEN,
+export const entryViewHide =
+  (): ActiveCollectionEntryViewVisibilityActionTypes => {
+    return {
+      type: ACTIVE_COLLECTION_ENTRY_VIEW_VISIBILITY_HIDDEN,
+    };
   };
-};
 
 export const entryDelete = (
   entryUUID: string

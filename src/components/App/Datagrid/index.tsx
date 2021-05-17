@@ -23,6 +23,7 @@ import { globalNotificationCustom } from "../../../redux/globalUI/actions";
 import { useLocation, useNavigate } from "@reach/router";
 import { DatagridColumns } from "../../DataCreation";
 import FeedbackDialog from "../../Util/FeedbackDialog";
+import { useAppSelector } from "../../../hooks/useAppSelector";
 
 const tableIcons: any = {
   Add: forwardRef((props: any, ref: any) => <AddBox {...props} ref={ref} />),
@@ -79,6 +80,7 @@ interface DatagridEntriesProps {
   collectionRef: string;
   allowDeleteMany?: boolean;
   allowUpdateMany?: boolean;
+  noEdit?: boolean;
 }
 
 const Datagrid = React.memo(
@@ -116,7 +118,9 @@ const Datagrid = React.memo(
     const tableRef = React.useRef<any>(null);
 
     const dispatch = useDispatch();
+    const { noEdit } = useAppSelector((state) => state.activeCollection);
 
+    console.log(noEdit);
     return (
       <div>
         <FeedbackDialog
@@ -128,10 +132,6 @@ const Datagrid = React.memo(
           callback={feedbackDialogState.callback}
         />
         <MaterialTable
-          // onSelectionChange={(data) => {
-          //   setSelectionValues(data);
-          //   console.log(selectionValues);
-          // }}
           tableRef={tableRef}
           localization={{
             body: {
@@ -158,56 +158,60 @@ const Datagrid = React.memo(
           title={collectionName + "s"}
           columns={columns}
           data={data}
-          actions={[
-            {
-              icon: Edit,
-              tooltip: `Editar ${collectionName}`,
-              onClick: (event, rowData) => {
-                if (
-                  tableRef!.current!.dataManager!.selectedCount > 1 &&
-                  !allowUpdateMany
-                ) {
-                  dispatch(
-                    globalNotificationCustom(
-                      `Não é possível EDITAR mais de um(a) ${collectionName.toUpperCase()} por vez, selecione apenas um item.`,
-                      "warning"
-                    )
-                  );
-                } else {
-                  updateFn(rowData[0]);
-                  // updateFn(rowData[0].uuid, rowData[0].label);
-                  // handleUpdateDialogOpen()
-                }
-              },
-            },
-            {
-              icon: Add,
-              tooltip: `Adicionar ${collectionName}`,
-              isFreeAction: true,
-              onClick: () => createFn(),
-            },
-            (rowData) => ({
-              icon: Delete,
-              tooltip: `Excluir ${collectionName}`,
-              onClick: (event, rowData) => {
-                if (
-                  tableRef!.current!.dataManager!.selectedCount > 1 &&
-                  !allowDeleteMany
-                ) {
-                  dispatch(
-                    globalNotificationCustom(
-                      `Não é possível DELETAR mais de um(a) ${collectionName.toUpperCase()} por vez, selecione apenas um item.`,
-                      "warning"
-                    )
-                  );
-                } else {
-                  handleDeleteWithDialog(() =>
-                    deleteFn(rowData[0].uuid, collectionRef)
-                  );
-                }
-              },
-            }),
-          ]}
+          actions={
+            noEdit
+              ? []
+              : [
+                  {
+                    icon: Edit,
+                    tooltip: `Editar ${collectionName}`,
+                    onClick: (event, rowData) => {
+                      if (
+                        tableRef!.current!.dataManager!.selectedCount > 1 &&
+                        !allowUpdateMany
+                      ) {
+                        dispatch(
+                          globalNotificationCustom(
+                            `Não é possível EDITAR mais de um(a) ${collectionName.toUpperCase()} por vez, selecione apenas um item.`,
+                            "warning"
+                          )
+                        );
+                      } else {
+                        updateFn(rowData[0]);
+                        // updateFn(rowData[0].uuid, rowData[0].label);
+                        // handleUpdateDialogOpen()
+                      }
+                    },
+                  },
+                  {
+                    icon: Add,
+                    tooltip: `Adicionar ${collectionName}`,
+                    isFreeAction: true,
+                    onClick: () => createFn(),
+                  },
+                  (rowData) => ({
+                    icon: Delete,
+                    tooltip: `Excluir ${collectionName}`,
+                    onClick: (event, rowData) => {
+                      if (
+                        tableRef!.current!.dataManager!.selectedCount > 1 &&
+                        !allowDeleteMany
+                      ) {
+                        dispatch(
+                          globalNotificationCustom(
+                            `Não é possível DELETAR mais de um(a) ${collectionName.toUpperCase()} por vez, selecione apenas um item.`,
+                            "warning"
+                          )
+                        );
+                      } else {
+                        handleDeleteWithDialog(() =>
+                          deleteFn(rowData[0].uuid, collectionRef)
+                        );
+                      }
+                    },
+                  }),
+                ]
+          }
           options={{
             actionsColumnIndex: -1,
             selection: true,

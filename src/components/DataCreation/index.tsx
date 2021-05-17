@@ -181,6 +181,7 @@ const DataCreation = ({
           <Fade in={true} timeout={{ enter: 500, exit: 500 }}>
             <div>
               <Datagrid
+                noEdit={activeCollection.noEdit}
                 collectionRef={activeCollection.collectionRef}
                 columns={categoriesColumns}
                 collectionName="Categoria"

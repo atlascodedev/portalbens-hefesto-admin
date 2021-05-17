@@ -54,6 +54,7 @@ export interface DataCreationItem extends DashboardItemRoot {
   hasAttributes?: boolean | null;
   fieldGroups?: FieldGroup[];
   showID?: boolean;
+  noEdit?: boolean;
 }
 
 export interface Attribute {
@@ -257,6 +258,39 @@ const testimonialCollection: DashboardItem = {
   ],
 };
 
+const messageCollection: DashboardItem = {
+  collectionRef: "messages",
+  hasAttributes: false,
+  hasCategories: false,
+  itemCategory: "creation",
+  itemID: "messages_id",
+  routerPath: "mensagens",
+  sidebarIcon: "AddPhotoAlternate",
+  sidebarLabel: "Mensagens",
+  noEdit: true,
+  fieldGroups: [{ id: "infoGroup", label: "informações" }],
+  fields: [
+    {
+      groupID: "infoGroup",
+      fieldType: "string",
+      label: "Nome",
+      name: "messageName",
+    },
+    {
+      groupID: "infoGroup",
+      fieldType: "string",
+      label: "Email",
+      name: "messageEmail",
+    },
+    {
+      groupID: "infoGroup",
+      fieldType: "string",
+      label: "Mensagem",
+      name: "messageText",
+    },
+  ],
+};
+
 const partnersCollection: DashboardItem = {
   collectionRef: "partners",
   itemCategory: "creation",
@@ -309,4 +343,5 @@ export const collections: Array<DashboardItem> = [
   blogCollection,
   testimonialCollection,
   partnersCollection,
+  messageCollection,
 ];
