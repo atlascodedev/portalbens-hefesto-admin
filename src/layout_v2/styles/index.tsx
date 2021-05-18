@@ -232,10 +232,11 @@ const SidebarItemIconContainer = styled.div`
   align-items: center;
 `;
 
-const SidebarItemLabelContainer = styled.div`
+const SidebarItemLabelContainer = styled.div<{ active: boolean }>`
   margin-left: 10px;
 
   transition: all 0.3s ease-in-out;
+  color: ${(props) => (props.active ? "#F15D3C" : "initial")};
 
   @media (min-width: 1024px) {
     display: block;
@@ -243,6 +244,7 @@ const SidebarItemLabelContainer = styled.div`
 `;
 
 interface SidebarItemLayoutProps {
+  route?: string;
   actionFn?: (...args: any[]) => void;
   icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
   label?: string;
@@ -254,6 +256,7 @@ export const SidebarItemLayout = ({
   icon = Autorenew,
   label = "Placeholder label",
   disabled = false,
+  route,
 }: SidebarItemLayoutProps) => {
   return (
     <Tooltip title={disabled ? "Opção desabilitada" : ""}>
@@ -261,7 +264,19 @@ export const SidebarItemLayout = ({
         <SidebarItemIconContainer>
           <SvgIcon component={icon} />
         </SidebarItemIconContainer>
-        <SidebarItemLabelContainer>{label}</SidebarItemLabelContainer>
+        <SidebarItemLabelContainer
+          active={
+            route &&
+            route ===
+              window.location.pathname.split("/")[
+                window.location.pathname.split("/").length - 1
+              ]
+              ? true
+              : false
+          }
+        >
+          {label}
+        </SidebarItemLabelContainer>
       </AppSidebarItemRoot>
     </Tooltip>
   );
@@ -528,12 +543,14 @@ export const AppLayoutRoot = ({
           actionFn={() => navigate(`/${basePath}/${dashboardPath}/log`)}
           label="Log administrativo"
           icon={MenuBook}
+          route="log"
         />
 
         <SidebarItemLayout
           actionFn={() => navigate(`/${basePath}/${dashboardPath}/mensagens`)}
           label="Mensagens"
           icon={Phone}
+          route="mensagens"
         />
 
         <div
