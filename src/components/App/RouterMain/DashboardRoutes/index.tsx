@@ -23,9 +23,8 @@ const DashboardRoutes = ({ location, navigate, path, uri }: Props) => {
     (state) => state.activeCollection
   );
 
-
   return (
-    <div >
+    <div>
       <AdonisGallery />
       <Toolbox />
       <ColorPicker />

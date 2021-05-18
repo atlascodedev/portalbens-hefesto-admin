@@ -119,9 +119,7 @@ export const newEntryCreate = (
             id: transactionUUID,
             user: "Admin",
           } as AdminLog)
-          .then((value) => {
-            console.log(value);
-          })
+          .then((value) => {})
           .catch((error) => {
             console.log(error);
           });
