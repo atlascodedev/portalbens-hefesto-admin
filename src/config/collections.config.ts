@@ -258,49 +258,6 @@ const testimonialCollection: DashboardItem = {
   ],
 };
 
-const adminActionsCollection: DashboardItem = {
-  collectionRef: "adminActions",
-  hasAttributes: false,
-  hasCategories: false,
-  itemCategory: "creation",
-  itemID: "admin_actions",
-  routerPath: "log",
-  sidebarIcon: "FileCopy",
-  sidebarLabel: "Log administrativo",
-  noEdit: true,
-  fields: [
-    {
-      fieldType: "string",
-      label: "Usuário",
-      name: "user",
-    },
-
-    {
-      fieldType: "string",
-      label: "Recurso",
-      name: "collection",
-    },
-
-    {
-      fieldType: "string",
-      label: "Data da modificação",
-      name: "date",
-    },
-
-    {
-      fieldType: "string",
-      label: "ID do recurso",
-      name: "id",
-    },
-
-    {
-      fieldType: "string",
-      label: "Tipo de ação",
-      name: "actionType",
-    },
-  ],
-};
-
 const messageCollection: DashboardItem = {
   collectionRef: "messages",
   hasAttributes: false,
@@ -386,6 +343,4 @@ export const collections: Array<DashboardItem> = [
   blogCollection,
   testimonialCollection,
   partnersCollection,
-  adminActionsCollection,
-  messageCollection,
 ];

@@ -12,17 +12,17 @@ import ColorPicker from "../../ColorPicker";
 import CategoryDialog from "../../CategoryDialog";
 import EntryCreation from "../../../DataCreation/DraftEntry";
 import EntryView from "../../../DataCreation/EntryView";
-import { useAppSelector } from "../../../../hooks/useAppSelector";
 import AppLayout from "../../../../layout_v2/Main";
-import useReferenceSize from "../../../../hooks/useReferenceSize";
+import ProtectedRoute from "../../../Util/ProtectedRoute";
+import MaterialTableCustom from "../../../Util/MaterialTable";
+
+const TestMe: React.FC<any> = () => {
+  return <div>hello motto</div>;
+};
 
 interface Props extends RouteComponentProps {}
 
 const DashboardRoutes = ({ location, navigate, path, uri }: Props) => {
-  const { isCreating, isUpdating } = useAppSelector(
-    (state) => state.activeCollection
-  );
-
   return (
     <div>
       <AdonisGallery />
@@ -45,6 +45,40 @@ const DashboardRoutes = ({ location, navigate, path, uri }: Props) => {
               );
             }
           )}
+          <ProtectedRoute
+            component={
+              <div style={{ padding: "3%", paddingTop: "7%" }}>
+                <MaterialTableCustom
+                  collectionName="Registro"
+                  collectionRef="log"
+                  columns={[
+                    { field: "user", title: "Usuário" },
+                    { field: "collection", title: "Recurso" },
+                    { field: "uuid", title: "ID do recurso" },
+                    { field: "actionType", title: "Tipo de ação" },
+                  ]}
+                />
+              </div>
+            }
+            path={"log"}
+          ></ProtectedRoute>
+          <ProtectedRoute
+            component={
+              <div style={{ padding: "3%", paddingTop: "7%" }}>
+                <MaterialTableCustom
+                  collectionName="Mensagem"
+                  collectionRef="messages"
+                  columns={[
+                    { field: "user", title: "Usuário" },
+                    { field: "collection", title: "Recurso" },
+                    { field: "uuid", title: "ID do recurso" },
+                    { field: "actionType", title: "Tipo de ação" },
+                  ]}
+                />
+              </div>
+            }
+            path={"mensagens"}
+          ></ProtectedRoute>
         </Router>
       </AppLayout>
     </div>

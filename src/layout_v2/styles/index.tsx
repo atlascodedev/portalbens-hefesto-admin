@@ -9,15 +9,17 @@ import {
   Autorenew,
   BugReport,
   Help,
+  MenuBook,
   MenuRounded,
   Notifications,
   Person,
+  Phone,
   Settings,
   Update,
 } from "@material-ui/icons";
 import LayoutDrawer from "../Drawer";
 import getCurrentPath from "../../helper/currentPath";
-import { Link } from "@reach/router";
+import { Link, useNavigate } from "@reach/router";
 import { basePath, dashboardPath } from "../../config/routes.config";
 import UserProfile from "../Profile";
 import NotificationList from "../NotificationList";
@@ -494,6 +496,8 @@ export const AppLayoutRoot = ({
     setVisibility(true);
   };
 
+  const navigate = useNavigate();
+
   return (
     <AppLayoutRootContainer>
       <EnhancedDialog />
@@ -520,6 +524,17 @@ export const AppLayoutRoot = ({
             />
           );
         })}
+        <SidebarItemLayout
+          actionFn={() => navigate(`/${basePath}/${dashboardPath}/log`)}
+          label="Log administrativo"
+          icon={MenuBook}
+        />
+
+        <SidebarItemLayout
+          actionFn={() => navigate(`/${basePath}/${dashboardPath}/mensagens`)}
+          label="Mensagens"
+          icon={Phone}
+        />
 
         <div
           style={{
@@ -557,7 +572,7 @@ export const AppLayoutRoot = ({
           </AppLayoutBurguerContainer>
 
           <Fade in={true} timeout={{ enter: 500, exit: 500 }}>
-            <AppLayoutUpperbarLabelContainer>
+            <AppLayoutUpperbarLabelContainer id="layout-label">
               {label}
             </AppLayoutUpperbarLabelContainer>
           </Fade>

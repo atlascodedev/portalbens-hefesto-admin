@@ -17,6 +17,7 @@ import { axiosInstance } from "../../../constants";
 import { db } from "../../../firebase";
 import { categoryLabelFromUUIDPath } from "../../../helper/cateroyLabelFromUUIDPath";
 import converToSlug from "../../../helper/convertToSlug";
+import firebaseLog from "../../../helper/firebaseLog";
 import { GlobalStateActionTypes } from "../../globalUI/types";
 import {
   ActiveCollectionAttributesObserverActionTypes,
@@ -60,13 +61,6 @@ import {
   SetActiveContentActionTypes,
   SET_ACTIVE_CONTENT,
 } from "../types";
-
-interface AdminLog {
-  collection: string;
-  user: string;
-  id: string;
-  actionType: string;
-}
 
 export const setActiveCollection = (
   activeCollection: DashboardItem
@@ -112,17 +106,7 @@ export const newEntryCreate = (
         dispatch({ type: ACTIVE_COLLECTION_ENTRY_CREATE_SUCCESS });
       })
       .then(() => {
-        axiosInstance
-          .post("/logging/entry", {
-            actionType: "Criar",
-            collection: activeCollection.sidebarLabel,
-            id: transactionUUID,
-            user: "Admin",
-          } as AdminLog)
-          .then((value) => {})
-          .catch((error) => {
-            console.log(error);
-          });
+        firebaseLog(activeCollection.collectionRef, "CRIAR");
       })
       .catch((error) => {
         console.log(error);

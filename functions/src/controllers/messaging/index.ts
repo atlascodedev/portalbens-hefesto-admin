@@ -28,9 +28,7 @@ export const storeFormMessage = async (
     uuid: transactionUUID,
   };
 
-  db.collection("collections")
-    .doc("messages")
-    .collection("entries")
+  db.collection("messages")
     .add(userMessage)
     .then((docCreated) => {
       res.status(200).json({ message: "Message stored successfully" });

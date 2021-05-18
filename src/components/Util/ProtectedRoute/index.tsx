@@ -6,10 +6,10 @@ import { RootState } from "../../../redux";
 
 interface Props extends ProtectedRouteProps, RouteComponentProps {
   onMount?: (...args: any[]) => void;
-  Component: React.FC<any> | JSX.Element;
+  component: JSX.Element;
 }
 
-const ProtectedRoute: React.FC<Props> = ({ onMount, children, auth }) => {
+const ProtectedRoute = ({ onMount, component, auth }: Props) => {
   React.useEffect(() => {
     if (onMount) {
       onMount();
@@ -18,7 +18,7 @@ const ProtectedRoute: React.FC<Props> = ({ onMount, children, auth }) => {
 
   return (
     <React.Fragment>
-      {auth ? { children } : <Redirect noThrow to={`/${loginRedirect}`} />}
+      {auth ? component : <Redirect noThrow to={`/${loginRedirect}`} />}
     </React.Fragment>
   );
 };
