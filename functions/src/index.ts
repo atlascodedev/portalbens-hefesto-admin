@@ -4,6 +4,7 @@ import adonisRouter from "./routes/adonis";
 import collectionsRouter from "./routes/collections";
 import staticBuildRouter from "./routes/staticBuild";
 import messagingRouter from "./routes/messaging";
+import logRouter from "./routes/log";
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.use("/collections", collectionsRouter);
 app.use("/build", staticBuildRouter);
 
 app.use("/messaging", messagingRouter);
+
+app.use("/logging", logRouter);
 
 export const api = functions.https.onRequest(app);
 

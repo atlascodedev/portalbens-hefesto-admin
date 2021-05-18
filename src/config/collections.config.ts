@@ -272,19 +272,31 @@ const adminActionsCollection: DashboardItem = {
     {
       fieldType: "string",
       label: "Usuário",
-      name: "username",
+      name: "user",
     },
 
     {
       fieldType: "string",
-      label: "Ação",
-      name: "action",
+      label: "Recurso",
+      name: "collection",
     },
 
     {
       fieldType: "string",
-      label: "Data",
-      name: "actionDate",
+      label: "Data da modificação",
+      name: "date",
+    },
+
+    {
+      fieldType: "string",
+      label: "ID do recurso",
+      name: "id",
+    },
+
+    {
+      fieldType: "string",
+      label: "Tipo de ação",
+      name: "actionType",
     },
   ],
 };

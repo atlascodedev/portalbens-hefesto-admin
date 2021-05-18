@@ -43,8 +43,6 @@ const InstallmentsListFormField = ({
     setFieldValue(name, [...currentFieldArray], true);
   };
 
-  console.log(listOptions);
-
   return (
     <ListBaseFormFieldLayout
       insertField={handleInsertField}

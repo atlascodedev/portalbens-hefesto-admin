@@ -82,6 +82,13 @@ export const ACTIVE_COLLECTION_ENTRIES_OBSERVER_SUCCESS =
 export const ACTIVE_COLLECTION_ENTRIES_OBSERVER_FAIL =
   "ACTIVE_COLLECTION_ENTRIES_OBSERVER_FAIL";
 
+export const ACTIVE_COLLECTION_ENTRIES_OBSERVER_STANDBY =
+  "ACTIVE_COLLECTION_ENTRIES_OBSERVER_STANDBY";
+
+interface ActiveCollectionEntriesObserverSignal {
+  type: typeof ACTIVE_COLLECTION_ENTRIES_OBSERVER_STANDBY;
+}
+
 interface ActiveCollectionEntriesObserverStart {
   type: typeof ACTIVE_COLLECTION_ENTRIES_OBSERVER_START;
 }
@@ -98,7 +105,8 @@ interface ActiveCollectionEntriesObserverFail {
 export type ActiveCollectionEntriesObserverActionTypes =
   | ActiveCollectionEntriesObserverStart
   | ActiveCollectionEntriesObserverSuccess
-  | ActiveCollectionEntriesObserverFail;
+  | ActiveCollectionEntriesObserverFail
+  | ActiveCollectionEntriesObserverSignal;
 
 export const ACTIVE_COLLECTION_ATTRIBUTES_OBSERVER_START =
   "ACTIVE_COLLECTION_ATTRIBUTES_OBSERVER_START";

@@ -1,4 +1,5 @@
 import { DialogContent } from "@material-ui/core";
+import { AxiosResponse } from "axios";
 import { nanoid } from "nanoid";
 import { Dispatch } from "react";
 import { RootStateOrAny } from "react-redux";
@@ -10,7 +11,9 @@ import {
   collections,
   DashboardItem,
   DataCreationField,
+  DataCreationItem,
 } from "../../../config/collections.config";
+import { axiosInstance } from "../../../constants";
 import { db } from "../../../firebase";
 import { categoryLabelFromUUIDPath } from "../../../helper/cateroyLabelFromUUIDPath";
 import converToSlug from "../../../helper/convertToSlug";
@@ -34,6 +37,7 @@ import {
   ACTIVE_COLLECTION_CATEGORIES_OBSERVER_START,
   ACTIVE_COLLECTION_CATEGORIES_OBSERVER_SUCCESS,
   ACTIVE_COLLECTION_ENTRIES_OBSERVER_FAIL,
+  ACTIVE_COLLECTION_ENTRIES_OBSERVER_STANDBY,
   ACTIVE_COLLECTION_ENTRIES_OBSERVER_START,
   ACTIVE_COLLECTION_ENTRIES_OBSERVER_SUCCESS,
   ACTIVE_COLLECTION_ENTRY_CREATE_FAIL,
@@ -56,6 +60,13 @@ import {
   SetActiveContentActionTypes,
   SET_ACTIVE_CONTENT,
 } from "../types";
+
+interface AdminLog {
+  collection: string;
+  user: string;
+  id: string;
+  actionType: string;
+}
 
 export const setActiveCollection = (
   activeCollection: DashboardItem
@@ -99,6 +110,24 @@ export const newEntryCreate = (
       .add(newEntry)
       .then(() => {
         dispatch({ type: ACTIVE_COLLECTION_ENTRY_CREATE_SUCCESS });
+      })
+      .then(() => {
+        axiosInstance
+          .post("/logging/entry", {
+            actionType: "Criar",
+            collection: activeCollection.sidebarLabel,
+            id: transactionUUID,
+            user: "Admin",
+          } as AdminLog)
+          .then((value) => {
+            console.log(value);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
       })
       .catch((error) => {
         console.log(error);
@@ -290,10 +319,10 @@ export const setupEntriesObserver = (
         .doc(collectionRef)
         .collection("entries")
         .onSnapshot((entriesObserver) => {
-          let snapShotData: Array<DataCreationField> = [];
+          let snapShotData: Array<DataCreationItem> = [];
 
           entriesObserver.forEach((doc) => {
-            snapShotData.push(doc.data() as DataCreationField);
+            snapShotData.push(doc.data() as DataCreationItem);
           });
 
           dispatch({

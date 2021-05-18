@@ -120,7 +120,6 @@ const Datagrid = React.memo(
     const dispatch = useDispatch();
     const { noEdit } = useAppSelector((state) => state.activeCollection);
 
-    console.log(noEdit);
     return (
       <div>
         <FeedbackDialog
