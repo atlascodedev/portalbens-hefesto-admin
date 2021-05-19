@@ -8,12 +8,9 @@ import { ThunkAction } from "redux-thunk";
 import { RootState } from "../..";
 import {
   Category,
-  collections,
   DashboardItem,
-  DataCreationField,
   DataCreationItem,
 } from "../../../config/collections.config";
-import { axiosInstance } from "../../../constants";
 import { db } from "../../../firebase";
 import { categoryLabelFromUUIDPath } from "../../../helper/cateroyLabelFromUUIDPath";
 import converToSlug from "../../../helper/convertToSlug";
@@ -22,7 +19,6 @@ import { GlobalStateActionTypes } from "../../globalUI/types";
 import {
   ActiveCollectionAttributesObserverActionTypes,
   ActiveCollectionCategoriesObserverActionTypes,
-  ActiveCollectionEntriesCategoriesGetActionTypes,
   ActiveCollectionEntriesObserverActionTypes,
   ActiveCollectionEntryCreateActionTypes,
   ActiveCollectionEntryDeleteActionTypes,
@@ -38,7 +34,6 @@ import {
   ACTIVE_COLLECTION_CATEGORIES_OBSERVER_START,
   ACTIVE_COLLECTION_CATEGORIES_OBSERVER_SUCCESS,
   ACTIVE_COLLECTION_ENTRIES_OBSERVER_FAIL,
-  ACTIVE_COLLECTION_ENTRIES_OBSERVER_STANDBY,
   ACTIVE_COLLECTION_ENTRIES_OBSERVER_START,
   ACTIVE_COLLECTION_ENTRIES_OBSERVER_SUCCESS,
   ACTIVE_COLLECTION_ENTRY_CREATE_FAIL,
@@ -55,7 +50,6 @@ import {
   ACTIVE_COLLECTION_ENTRY_UPDATE_SUCCESS,
   ACTIVE_COLLECTION_ENTRY_VIEW_VISIBILITY_HIDDEN,
   ACTIVE_COLLECTION_ENTRY_VIEW_VISIBILITY_SHOW,
-  ACTIVE_COLLECTION_SET_FAIL,
   ACTIVE_COLLECTION_SET_START,
   ACTIVE_COLLECTION_SET_SUCCESS,
   SetActiveContentActionTypes,
@@ -159,6 +153,8 @@ export const entryUpdate = (
               dispatch({
                 type: ACTIVE_COLLECTION_ENTRY_UPDATE_SUCCESS,
               });
+
+              firebaseLog(activeCollection.collectionRef, "ATUALIZAR");
             })
             .catch((error) => {
               console.log(error);
@@ -427,6 +423,10 @@ export const entryDelete = (
             .delete()
             .then(() => {
               dispatch({ type: ACTIVE_COLLECTION_ENTRY_DELETE_SUCCESS });
+              firebaseLog(
+                cachedState.activeCollection.collectionRef,
+                "DELETAR"
+              );
             })
             .catch((error) => {
               console.log(error);

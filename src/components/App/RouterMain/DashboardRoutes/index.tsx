@@ -69,10 +69,10 @@ const DashboardRoutes = ({ location, navigate, path, uri }: Props) => {
                   collectionName="Mensagem"
                   collectionRef="messages"
                   columns={[
-                    { field: "user", title: "Usuário" },
-                    { field: "collection", title: "Recurso" },
-                    { field: "uuid", title: "ID do recurso" },
-                    { field: "actionType", title: "Tipo de ação" },
+                    { field: "email", title: "E-mail" },
+                    { field: "name", title: "Nome" },
+                    { field: "uuid", title: "ID do recurso", hidden: true },
+                    { field: "message", title: "Mensagem" },
                   ]}
                 />
               </div>
