@@ -27,6 +27,7 @@ const generateEntriesDataGridColumns = (
       field: field.name,
       title: field.label,
       hidden: field.hidden ? true : false,
+      export: true,
     };
 
     entriesDataGridColumns.push(dataGridColumnItemInternal);

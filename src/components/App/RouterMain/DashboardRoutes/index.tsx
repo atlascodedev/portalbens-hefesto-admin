@@ -15,10 +15,7 @@ import EntryView from "../../../DataCreation/EntryView";
 import AppLayout from "../../../../layout_v2/Main";
 import ProtectedRoute from "../../../Util/ProtectedRoute";
 import MaterialTableCustom from "../../../Util/MaterialTable";
-
-const TestMe: React.FC<any> = () => {
-  return <div>hello motto</div>;
-};
+import ExportCards from "../../ExportCards";
 
 interface Props extends RouteComponentProps {}
 
@@ -28,6 +25,7 @@ const DashboardRoutes = ({ location, navigate, path, uri }: Props) => {
       <AdonisGallery />
       <Toolbox />
       <ColorPicker />
+      <ExportCards />
       <CategoryDialog />
       <EntryCreation />
       <EntryView />

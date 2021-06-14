@@ -53,6 +53,7 @@ export interface DatagridColumns {
   field: string;
   hidden?: boolean;
   render?: (...args: any[]) => any;
+  export?: boolean;
 }
 
 interface LayoutNavigationProps extends LayoutNavigationReduxProps {}
