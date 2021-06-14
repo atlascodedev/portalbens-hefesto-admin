@@ -9,6 +9,7 @@ import {
   Autorenew,
   BugReport,
   Help,
+  ImportExport,
   MenuBook,
   MenuRounded,
   Notifications,
@@ -36,6 +37,7 @@ import {
 } from "../../redux/globalUI/actions";
 import { checkAndUpdateExpiredCards } from "../../redux/special/cards/actions";
 import { useAppSelector } from "../../hooks/useAppSelector";
+import { exportCardOpen } from "../../redux/special/exportCards/actions";
 
 export const AppLayoutSidebarContainer = styled(motion.div)`
   min-width: 15%;
@@ -559,6 +561,12 @@ export const AppLayoutRoot = ({
           }}
         >
           <div style={{ position: "absolute", bottom: "5%" }}>
+            <SidebarItemLayout
+              actionFn={() => dispatch(exportCardOpen() as any)}
+              icon={ImportExport}
+              label="Exportar cartas"
+            />
+
             <SidebarItemLayout
               actionFn={() => dispatch(checkAndUpdateExpiredCards() as any)}
               icon={Update}
