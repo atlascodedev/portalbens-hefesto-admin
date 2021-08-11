@@ -1,7 +1,6 @@
 import { db } from "../../firebase";
 import jsPDF from 'jspdf'
 import autoTable from  'jspdf-autotable'
-import { BooleanLiteral } from "typescript";
 import _ from "lodash";
 
 
@@ -24,63 +23,64 @@ interface CardCollectionType {
 
 const cardCollectionToFlatArray = (card: CardCollectionType) => {
 
+    const formatter = new Intl.NumberFormat('pt-BR', {currency: 'BRL', style: 'currency'});
+
     const flatMapWithoutInstallment: Omit<CardCollectionType, "cardInstallment"> = {
-        uuid: card.uuid,
         administradora: card.administradora,
-        cardEntrada: card.cardEntrada,
-        cardValor: card.cardValor,
-        cardDestaque: card.cardDestaque,
-        cardExpire: card.cardExpire,
+        cardEntrada: formatter.format(card.cardEntrada) as any,
+        cardValor: formatter.format(card.cardValor) as any,
+        cardDestaque: card.cardDestaque ? 'Sim' : 'Não' as any,
+        cardExpire: new Date(card.cardExpire).toLocaleDateString('pt-br'),
         cardNotes: card.cardNotes,
-        cardSituation: card.cardSituation,
+        cardSituation: card.cardSituation ? 'Ativa' : 'Inativa' as any,
         cardType: card.cardType,
+        uuid: card.uuid,
     };
 
-    console.log(_.flatMap(flatMapWithoutInstallment, ))
-
+    return _.flatMap(flatMapWithoutInstallment)
 }
 
 const cardInstallmentsFlatAndFormat = (cardInstallment: CardCollectionType['cardInstallment']) => {
     const formatter = new Intl.NumberFormat('pt-BR', {currency: 'BRL', style: 'currency'})
     const formatAndFlat = cardInstallment.map((value, index) => {
-
-        return `${value.installmentMonths} vezez de ${formatter.format(value.installmentValue)}`
+        return `${value.installmentMonths}x  ${formatter.format(value.installmentValue)}`
 
     })
     return formatAndFlat.join('\n\n');
-
 }
-
 
 export default async function exportAllCards() {
 
-    const cardArray: CardCollectionType[] = []
-
+    const flatDataArray: Array<string | number | boolean>[] = []
     try {
         
         const fireStoreRequest = await db.collection('collections').doc('cartas').collection('entries').get()
 
         fireStoreRequest.forEach(async (value ) => {
 
-        cardArray.push(value.data() as CardCollectionType)
+        const cardValue = value.data() as CardCollectionType;
+
+        flatDataArray.push([...cardCollectionToFlatArray(cardValue), cardInstallmentsFlatAndFormat(cardValue.cardInstallment)])
+
         })
 
+        const doc = new jsPDF()
 
-        // console.log(cardArray)
-        // cardCollectionToFlatArray(cardArray[0])
+        autoTable(doc, {
+            head: [[ 'Administradora', 'Entrada', 'Valor',  'Destaque', 'Vencimento', 'Anotações', 'Situação', 'Tipo', 'ID', 'Parcelas' ]],
+            body: flatDataArray,
+            bodyStyles: {
+                fontSize: 5
+            },
+            headStyles: {
+                fontSize: 8,
+                
+            }
 
-        cardInstallmentsFlatAndFormat(cardArray[0].cardInstallment)
+            
+        }, )
 
-
-
-        // const doc = new jsPDF()
-
-        // autoTable(doc, {
-        //     head: [['ID', 'Administradora', 'Entrada', 'Valor', 'Próximo vencimento', 'Tipo de carta', 'Carta Destaque', 'Parcelas', 'Anotações'   ]],
-        //     body: []
-        // })
-
-        // doc.save()
+        doc.save()
 
     } catch (error) {
 
