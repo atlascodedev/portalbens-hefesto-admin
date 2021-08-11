@@ -10,7 +10,7 @@
     "dev": "tsc -w"
   },
   "engines": {
-    "node": "12"
+    "node": "14"
   },
   "main": "lib/index.js",
   "dependencies": {

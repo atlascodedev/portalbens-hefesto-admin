@@ -36,9 +36,208 @@ import {
   setLoadingTrue,
 } from "../../redux/globalUI/actions";
 import { checkAndUpdateExpiredCards } from "../../redux/special/cards/actions";
-import { useAppSelector } from "../../hooks/useAppSelector";
-import { exportCardOpen } from "../../redux/special/exportCards/actions";
+import exportAllCards from '../../helper/exportAllCards'
 
+
+interface AppLayoutRootProps {
+  sidebarItems: DashboardItem[];
+  logo: string;
+  children: React.ReactNode;
+  label: string;
+  logoutFn: (...args: any[]) => void;
+}
+
+export const AppLayoutRoot = ({
+  sidebarItems = [],
+  logo,
+  children,
+  label,
+  logoutFn,
+}: AppLayoutRootProps) => {
+  const [drawerState, setDrawerState] = React.useState<boolean>(false);
+  const [profileDialogState, setProfileDialogState] =
+    React.useState<boolean>(false);
+  const [notificationsAnchorElement, setNotificationsAnchorElement] =
+    React.useState<HTMLElement | null>(null);
+
+  const [appInfoState, setAppInfoState] = React.useState<boolean>(false);
+
+  const appInfoToggle = (open: boolean) => {
+    setAppInfoState(open);
+  };
+
+  const profileToggle = (open: boolean) => {
+    setProfileDialogState(open);
+  };
+
+  const drawerToggle = (open: boolean) => {
+    setDrawerState(open);
+  };
+
+  const getNotificationAnchorRef = (event: React.MouseEvent<HTMLElement>) => {
+    setNotificationsAnchorElement(event.currentTarget);
+  };
+
+  const removeNotificationAnchorRef = () => {
+    setNotificationsAnchorElement(null);
+  };
+
+  const { EnhancedDialog, setCallback, setVisibility } = useEnhancedDialog(
+    "Esta ação irá sincronizar os dados presentes em seu banco de dados com sua aplicação/website. Esta ação leva em média 2-3 minutos.",
+    "Sincronização de dados",
+    "info"
+  );
+
+  const dispatch = useAppDispatch();
+
+  const handleForge = () => {
+    dispatch(setLoadingTrue());
+
+    axios
+      .post(
+        "https://us-central1-portalbens-nextjs-hefesto.cloudfunctions.net/api/build/forge"
+      )
+      .then(() => {
+        dispatch(setLoadingFalse());
+        dispatch(
+          globalNotificationCustom(
+            "Processo de sincronização iniciado com sucesso!",
+            "success"
+          )
+        );
+      });
+  };
+
+  const handleRepositoryDispatchDialog = () => {
+    setCallback(() => handleForge());
+    setVisibility(true);
+  };
+
+  const navigate = useNavigate();
+
+ 
+
+
+
+  return (
+    <AppLayoutRootContainer>
+      <EnhancedDialog />
+      <LayoutDrawer
+        sidebarItems={sidebarItems}
+        logo={logo}
+        open={drawerState}
+        toggleDrawer={drawerToggle}
+      />
+      <AppLayoutSidebarContainer>
+        <AppSidebarBrandingContainer>
+          <AppSidebarBrandingLogoContainer>
+            <AppSidebarBrandingImage src={logo} />
+          </AppSidebarBrandingLogoContainer>
+        </AppSidebarBrandingContainer>
+
+        {sidebarItems.map((item, index: number) => {
+          return (
+            <AppSidebarItem
+              currentPath={item.routerPath}
+              iconType={item.sidebarIcon}
+              label={item.sidebarLabel}
+              key={index}
+            />
+          );
+        })}
+        <SidebarItemLayout
+          actionFn={() => navigate(`/${basePath}/${dashboardPath}/log`)}
+          label="Log administrativo"
+          icon={MenuBook}
+          route="log"
+        />
+
+        <SidebarItemLayout
+          actionFn={() => navigate(`/${basePath}/${dashboardPath}/mensagens`)}
+          label="Mensagens"
+          icon={Phone}
+          route="mensagens"
+        />
+
+        <div
+          style={{
+            height: "100%",
+          }}
+        >
+          <div style={{ position: "absolute", bottom: "5%" }}>
+            <SidebarItemLayout
+              actionFn={exportAllCards}
+              icon={ImportExport}
+              label="Exportar cartas"
+            />
+
+            <SidebarItemLayout
+              actionFn={() => dispatch(checkAndUpdateExpiredCards() as any)}
+              icon={Update}
+              label="Checar cartas vencidas"
+            />
+
+            <SidebarItemLayout
+              actionFn={handleRepositoryDispatchDialog}
+              icon={Autorenew}
+              label="Atualizar website"
+            />
+            <SidebarItemLayout disabled icon={Settings} label="Configurações" />
+
+            <SidebarItemLayout
+              disabled
+              icon={BugReport}
+              label="Reportar um bug"
+            />
+          </div>
+        </div>
+      </AppLayoutSidebarContainer>
+      <AppLayoutSidebarContainerAnchor></AppLayoutSidebarContainerAnchor>
+
+      <AppLayoutMainContainer>
+        <AppLayoutUpperbar>
+          <AppLayoutBurguerContainer onClick={() => drawerToggle(true)}>
+            <SvgIcon component={MenuRounded} />
+          </AppLayoutBurguerContainer>
+
+          <Fade in={true} timeout={{ enter: 500, exit: 500 }}>
+            <AppLayoutUpperbarLabelContainer id="layout-label">
+              {label}
+            </AppLayoutUpperbarLabelContainer>
+          </Fade>
+
+          <AppLayoutUpperbarIconContainer>
+            <div
+              style={{ display: "flex" }}
+              onClick={(e: React.MouseEvent<HTMLElement>) =>
+                getNotificationAnchorRef(e)
+              }
+            >
+              <SvgIcon component={Notifications} />
+            </div>
+            <SvgIcon onClick={() => appInfoToggle(true)} component={Help} />
+            <SvgIcon onClick={() => profileToggle(true)} component={Person} />
+          </AppLayoutUpperbarIconContainer>
+        </AppLayoutUpperbar>
+
+        <AppLayoutContent>{children}</AppLayoutContent>
+      </AppLayoutMainContainer>
+      <UserProfile
+        logout={logoutFn}
+        dialogOpen={profileDialogState}
+        toggleDialog={profileToggle}
+      />
+      <NotificationList
+        anchorRef={notificationsAnchorElement}
+        handleClose={removeNotificationAnchorRef}
+      />
+      <AppInfo
+        handleCloseFn={() => appInfoToggle(false)}
+        isOpen={appInfoState}
+      />
+    </AppLayoutRootContainer>
+  );
+};
 export const AppLayoutSidebarContainer = styled(motion.div)`
   min-width: 15%;
   max-width: 15%;
@@ -367,7 +566,6 @@ const AppInfoRoadMapContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
-
 interface AppInfoLayoutProps {
   version?: string;
   branch?: string;
@@ -436,201 +634,5 @@ export const AppSidebarItem = ({
         </AppSidebarItemLabelContainer>
       </AppSidebarItemRoot>
     </Link>
-  );
-};
-
-interface AppLayoutRootProps {
-  sidebarItems: DashboardItem[];
-  logo: string;
-  children: React.ReactNode;
-  label: string;
-  logoutFn: (...args: any[]) => void;
-}
-
-export const AppLayoutRoot = ({
-  sidebarItems = [],
-  logo,
-  children,
-  label,
-  logoutFn,
-}: AppLayoutRootProps) => {
-  const [drawerState, setDrawerState] = React.useState<boolean>(false);
-  const [profileDialogState, setProfileDialogState] =
-    React.useState<boolean>(false);
-  const [notificationsAnchorElement, setNotificationsAnchorElement] =
-    React.useState<HTMLElement | null>(null);
-
-  const [appInfoState, setAppInfoState] = React.useState<boolean>(false);
-
-  const appInfoToggle = (open: boolean) => {
-    setAppInfoState(open);
-  };
-
-  const profileToggle = (open: boolean) => {
-    setProfileDialogState(open);
-  };
-
-  const drawerToggle = (open: boolean) => {
-    setDrawerState(open);
-  };
-
-  const getNotificationAnchorRef = (event: React.MouseEvent<HTMLElement>) => {
-    setNotificationsAnchorElement(event.currentTarget);
-  };
-
-  const removeNotificationAnchorRef = () => {
-    setNotificationsAnchorElement(null);
-  };
-
-  const { EnhancedDialog, setCallback, setVisibility } = useEnhancedDialog(
-    "Esta ação irá sincronizar os dados presentes em seu banco de dados com sua aplicação/website. Esta ação leva em média 2-3 minutos.",
-    "Sincronização de dados",
-    "info"
-  );
-
-  const dispatch = useAppDispatch();
-
-  const handleForge = () => {
-    dispatch(setLoadingTrue());
-
-    axios
-      .post(
-        "https://us-central1-portalbens-nextjs-hefesto.cloudfunctions.net/api/build/forge"
-      )
-      .then(() => {
-        dispatch(setLoadingFalse());
-        dispatch(
-          globalNotificationCustom(
-            "Processo de sincronização iniciado com sucesso!",
-            "success"
-          )
-        );
-      });
-  };
-
-  const handleRepositoryDispatchDialog = () => {
-    setCallback(() => handleForge());
-    setVisibility(true);
-  };
-
-  const navigate = useNavigate();
-
-  return (
-    <AppLayoutRootContainer>
-      <EnhancedDialog />
-      <LayoutDrawer
-        sidebarItems={sidebarItems}
-        logo={logo}
-        open={drawerState}
-        toggleDrawer={drawerToggle}
-      />
-      <AppLayoutSidebarContainer>
-        <AppSidebarBrandingContainer>
-          <AppSidebarBrandingLogoContainer>
-            <AppSidebarBrandingImage src={logo} />
-          </AppSidebarBrandingLogoContainer>
-        </AppSidebarBrandingContainer>
-
-        {sidebarItems.map((item, index: number) => {
-          return (
-            <AppSidebarItem
-              currentPath={item.routerPath}
-              iconType={item.sidebarIcon}
-              label={item.sidebarLabel}
-              key={index}
-            />
-          );
-        })}
-        <SidebarItemLayout
-          actionFn={() => navigate(`/${basePath}/${dashboardPath}/log`)}
-          label="Log administrativo"
-          icon={MenuBook}
-          route="log"
-        />
-
-        <SidebarItemLayout
-          actionFn={() => navigate(`/${basePath}/${dashboardPath}/mensagens`)}
-          label="Mensagens"
-          icon={Phone}
-          route="mensagens"
-        />
-
-        <div
-          style={{
-            height: "100%",
-          }}
-        >
-          <div style={{ position: "absolute", bottom: "5%" }}>
-            <SidebarItemLayout
-              actionFn={() => dispatch(exportCardOpen() as any)}
-              icon={ImportExport}
-              label="Exportar cartas"
-            />
-
-            <SidebarItemLayout
-              actionFn={() => dispatch(checkAndUpdateExpiredCards() as any)}
-              icon={Update}
-              label="Checar cartas vencidas"
-            />
-
-            <SidebarItemLayout
-              actionFn={handleRepositoryDispatchDialog}
-              icon={Autorenew}
-              label="Atualizar website"
-            />
-            <SidebarItemLayout disabled icon={Settings} label="Configurações" />
-
-            <SidebarItemLayout
-              disabled
-              icon={BugReport}
-              label="Reportar um bug"
-            />
-          </div>
-        </div>
-      </AppLayoutSidebarContainer>
-      <AppLayoutSidebarContainerAnchor></AppLayoutSidebarContainerAnchor>
-
-      <AppLayoutMainContainer>
-        <AppLayoutUpperbar>
-          <AppLayoutBurguerContainer onClick={() => drawerToggle(true)}>
-            <SvgIcon component={MenuRounded} />
-          </AppLayoutBurguerContainer>
-
-          <Fade in={true} timeout={{ enter: 500, exit: 500 }}>
-            <AppLayoutUpperbarLabelContainer id="layout-label">
-              {label}
-            </AppLayoutUpperbarLabelContainer>
-          </Fade>
-
-          <AppLayoutUpperbarIconContainer>
-            <div
-              style={{ display: "flex" }}
-              onClick={(e: React.MouseEvent<HTMLElement>) =>
-                getNotificationAnchorRef(e)
-              }
-            >
-              <SvgIcon component={Notifications} />
-            </div>
-            <SvgIcon onClick={() => appInfoToggle(true)} component={Help} />
-            <SvgIcon onClick={() => profileToggle(true)} component={Person} />
-          </AppLayoutUpperbarIconContainer>
-        </AppLayoutUpperbar>
-
-        <AppLayoutContent>{children}</AppLayoutContent>
-      </AppLayoutMainContainer>
-      <UserProfile
-        logout={logoutFn}
-        dialogOpen={profileDialogState}
-        toggleDialog={profileToggle}
-      />
-      <NotificationList
-        anchorRef={notificationsAnchorElement}
-        handleClose={removeNotificationAnchorRef}
-      />
-      <AppInfo
-        handleCloseFn={() => appInfoToggle(false)}
-        isOpen={appInfoState}
-      />
-    </AppLayoutRootContainer>
   );
 };

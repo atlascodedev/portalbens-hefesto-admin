@@ -13,7 +13,8 @@ emulator-data
 
 # production
 /build
-
+**lock.json
+**.lock
 firebaseFunctionsEnv.json
 
 # misc
@@ -30,3 +31,4 @@ yarn-error.log*
 # logs
 
 *.log
+**firebase-export*
