@@ -1,14 +1,12 @@
-import { spawn, SpawnOptions } from "child_process";
-import { resolve, join } from "path";
-import { tmpdir } from "os";
+import { spawn, SpawnOptions, ChildProcess } from "child_process";
+import { resolve } from "path";
 import * as chalk from "chalk";
-import { ChildProcess } from "node:child_process";
 
 const log = console.log;
 
-const npmCommand = process.platform == "win32" ? "npm.cmd" : "npm";
+const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
 const firebaseCommand =
-  process.platform == "win32" ? "firebase.cmd" : "firebase";
+  process.platform === "win32" ? "firebase.cmd" : "firebase";
 
 interface SpawnArguments {
   command: string;

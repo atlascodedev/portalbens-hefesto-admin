@@ -141,6 +141,12 @@ const cardCollection: DashboardItem = {
     {
       groupID: "infoGroup",
       fieldType: "boolean",
+      label: "Carta náutica/aérea",
+      name: "cardBoatPlane",
+    },
+    {
+      groupID: "infoGroup",
+      fieldType: "boolean",
       label: "Situação da carta",
       name: "cardSituation",
       hidden: true,
