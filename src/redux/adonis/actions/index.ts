@@ -91,9 +91,8 @@ export const getAllImageLinks = (): ThunkAction<
       for (let i = 0; i < allThumbnailPath.length; i++) {
         let fileMetadata = await allThumbnailPath[i].getMetadata();
 
-        let adonisOrderedTripleInternal: AdonisOrderedTriple = getAdonisOrderedTriple(
-          fileMetadata.name
-        );
+        let adonisOrderedTripleInternal: AdonisOrderedTriple =
+          getAdonisOrderedTriple(fileMetadata.name);
 
         let adonisImageInternal: AdonisImage = {
           fileName: fileMetadata.customMetadata.fileName,
@@ -111,10 +110,10 @@ export const getAllImageLinks = (): ThunkAction<
         type: GET_ADONIS_GALLERY_PHOTOS_SUCCESS,
         payload: adonisImageGallery,
       });
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: GET_ADONIS_GALLERY_PHOTOS_FAIL,
-        payload: error.message,
+        payload: error.message as any,
       });
     }
   };
