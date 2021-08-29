@@ -13,8 +13,6 @@ emulator-data
 
 # production
 /build
-**lock.json
-**.lock
 firebaseFunctionsEnv.json
 
 # misc
