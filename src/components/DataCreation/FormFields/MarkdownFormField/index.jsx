@@ -2,7 +2,7 @@ import React from "react";
 import { FormFieldComponentProps } from "../Root";
 import styled from "styled-components";
 import SunEditor, { SunEditorReactProps } from "suneditor-react";
-import "suneditor/dist/css/suneditor.min.css"; // Import Sun Editor's CSS File
+import "suneditor/dist/css/suneditor.min.css";
 import { useAppSelector } from "../../../../hooks/useAppSelector";
 
 const allPlugins = [
@@ -85,7 +85,6 @@ const MarkdownFormField = (props) => {
         <SunEditor
           ref={markdownRef}
           setContents={isUpdating ? entrySelected.entryValues[name] : ""}
-          onFocus={() => console.log("ass")}
           lang="pt_br"
           name={name}
           defaultValue={value}

@@ -45,6 +45,7 @@
     "redux-thunk": "^2.3.0",
     "slugify": "^1.5.0",
     "styled-components": "^5.2.1",
+    "suneditor": "^2.41.3",
     "suneditor-react": "^2.16.2",
     "web-vitals": "^1.1.0",
     "yup": "^0.32.8"
